@@ -1,0 +1,18 @@
+<resources>
+    <string name="read_more">بیشتر</string>
+    <string name="read_less">" نمایش خلاصه"</string>
+    <string name="error_occurred">بروز خطا، لطفا مجددا سعی کنید</string>
+    <string name="need_permissions">نیاز به دسترسی</string>
+    <string name="need_permissions_msg">برنامه برای عملکرد صحیح نیاز به دسترسی‌هایی دارد ، شما می توانید از طریق تنظیمات آن‌ها را فعال کنید.</string>
+    <string name="open_setting">تنظیمات</string>
+    <string name="title">عنوان</string>
+    <string name="province_">"استان:  "</string>
+    <string name="city_">"شهر:  "</string>
+    <string name="home_phone_">"تلفن ثابت:  "</string>
+    <string name="phone_">"تلفن ضروری:  "</string>
+    <string name="province">استان</string>
+    <string name="city">شهر</string>
+    <string name="confirm">تایید</string>
+    <string name="cancel">انصراف</string>
+    <string name="save">ذخیره</string>
+</resources>

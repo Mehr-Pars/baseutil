@@ -1,0 +1,50 @@
+<resources>
+    <!-- Default screen margins -->
+    <dimen name="margin_very_low">2.4dp</dimen>
+    <dimen name="margin_low">4.0dp</dimen>
+    <dimen name="margin_medium">5.6dp</dimen>
+    <dimen name="margin_high">8.0dp</dimen>
+    <dimen name="margin_very_high">12.0dp</dimen>
+    <dimen name="margin_extra">16.0dp</dimen>
+    <dimen name="margin_extra_high">24.0dp</dimen>
+    <dimen name="margin_extra_very_high">32.0dp</dimen>
+
+    <!-- Default text sizes -->
+    <dimen name="text_size_very_small">6.4sp</dimen>
+    <dimen name="text_size_small">8.0sp</dimen>
+    <dimen name="text_size_very_mini">9.6sp</dimen>
+    <dimen name="text_size_mini">10.4sp</dimen>
+    <dimen name="text_size_medium">14.4sp</dimen>
+    <dimen name="text_size_large">16.0sp</dimen>
+    <dimen name="text_size_huge">18.4sp</dimen>
+    <dimen name="text_size_massive">21.6sp</dimen>
+
+    <!-- default radius -->
+    <dimen name="radius_low">2.4dp</dimen>
+    <dimen name="radius_medium">5.6dp</dimen>
+    <dimen name="radius_normal">12.0dp</dimen>
+    <dimen name="radius_extra">40.0dp</dimen>
+
+    <!-- default icon sizes -->
+    <dimen name="icon_size_very_small">16.0dp</dimen>
+    <dimen name="icon_size_small">20.0dp</dimen>
+    <dimen name="icon_size_normal">24.0dp</dimen>
+    <dimen name="icon_size_medium">28.0dp</dimen>
+    <dimen name="icon_size_large">32.0dp</dimen>
+
+    <!-- default button sizes -->
+    <dimen name="button_width_very_small">64.0dp</dimen>
+    <dimen name="button_width_small">80.0dp</dimen>
+    <dimen name="button_width_medium">96.0dp</dimen>
+    <dimen name="button_width_normal">120.0dp</dimen>
+    <dimen name="button_width_large">224.0dp</dimen>
+    <dimen name="button_height_lower">24.0dp</dimen>
+    <dimen name="button_height_low">28.0dp</dimen>
+    <dimen name="button_height_medium">32.0dp</dimen>
+    <dimen name="button_height_normal">36.0dp</dimen>
+    <dimen name="button_height_large">40.0dp</dimen>
+
+
+    <dimen name="edit_text_height_normal">36.0dp</dimen>
+    <dimen name="action_bar_height">38.4dp</dimen>
+</resources>

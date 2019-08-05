@@ -1,0 +1,52 @@
+<resources>
+    <!-- Default screen margins -->
+    <dimen name="margin_very_low">3dp</dimen>
+    <dimen name="margin_low">5dp</dimen>
+    <dimen name="margin_medium">7dp</dimen>
+    <dimen name="margin_high">10dp</dimen>
+    <dimen name="margin_very_high">15dp</dimen>
+    <dimen name="margin_extra">20dp</dimen>
+    <dimen name="margin_extra_high">30dp</dimen>
+    <dimen name="margin_extra_very_high">40dp</dimen>
+
+    <!-- Default text sizes -->
+    <dimen name="text_size_very_small">8sp</dimen>
+    <dimen name="text_size_small">10sp</dimen>
+    <dimen name="text_size_very_mini">12sp</dimen>
+    <dimen name="text_size_mini">13sp</dimen>
+    <dimen name="text_size_tiny">15.5sp</dimen>
+    <dimen name="text_size_medium">18sp</dimen>
+    <dimen name="text_size_large">20sp</dimen>
+    <dimen name="text_size_huge">23sp</dimen>
+    <dimen name="text_size_massive">27sp</dimen>
+
+    <!-- default radius -->
+    <dimen name="radius_low">3dp</dimen>
+    <dimen name="radius_medium">7dp</dimen>
+    <dimen name="radius_normal">15dp</dimen>
+    <dimen name="radius_extra">50dp</dimen>
+
+    <!-- default icon sizes -->
+    <dimen name="icon_size_very_small">20dp</dimen>
+    <dimen name="icon_size_small">25dp</dimen>
+    <dimen name="icon_size_normal">30dp</dimen>
+    <dimen name="icon_size_medium">35dp</dimen>
+    <dimen name="icon_size_large">40dp</dimen>
+
+    <!-- default button sizes -->
+    <dimen name="button_width_very_small">80dp</dimen>
+    <dimen name="button_width_small">100dp</dimen>
+    <dimen name="button_width_medium">120dp</dimen>
+    <dimen name="button_width_normal">150dp</dimen>
+    <dimen name="button_width_large">280dp</dimen>
+    <dimen name="button_height_lower">30dp</dimen>
+    <dimen name="button_height_low">35dp</dimen>
+    <dimen name="button_height_medium">40dp</dimen>
+    <dimen name="button_height_normal">45dp</dimen>
+    <dimen name="button_height_large">50dp</dimen>
+
+
+    <dimen name="edit_text_height_normal">45dp</dimen>
+    <dimen name="action_bar_height">48dp</dimen>
+    <dimen name="divider_width">0.7dp</dimen>
+</resources>

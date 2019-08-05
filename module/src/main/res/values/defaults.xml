@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_font">fonts/iransans.ttf</string>
+    <string name="app_font_bold">fonts/iransans_bold.ttf</string>
+    <string name="app_font_farsi_num">fonts/iransans_farsi_numbers.ttf</string>
+</resources>
