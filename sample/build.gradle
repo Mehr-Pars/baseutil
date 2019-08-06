@@ -5,6 +5,14 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'epeyk mobile'
+            keyPassword 'epeyk2014'
+            storeFile file('C:/key.android')
+            storePassword 'epeyk2014'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "epeyk.mobile.baseutilsample"
@@ -15,11 +23,13 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
+        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
     dataBinding {

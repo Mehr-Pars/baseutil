@@ -9,7 +9,9 @@ import epeyk.mobile.baseutil.R
 
 open class RoundedImageView : androidx.appcompat.widget.AppCompatImageView {
     private val clipPath = Path()
-    private val rect = RectF(0f, 0f, this.width.toFloat(), this.height.toFloat())
+    private val rect by lazy {
+        RectF(0f, 0f, this.width.toFloat(), this.height.toFloat())
+    }
 
     constructor(context: Context) : super(context) {
 
@@ -37,6 +39,6 @@ open class RoundedImageView : androidx.appcompat.widget.AppCompatImageView {
 
     companion object {
 
-        var radius: Float = 0.toFloat()
+        var radius: Float = 0.0f
     }
 }

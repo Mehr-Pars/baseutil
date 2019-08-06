@@ -70,7 +70,7 @@ publishing {
 //            artifactId libraryArtifactId
 //
 ////            artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
-//            artifact("$buildDir/outputs/aar/app-release.aar")
+//            artifact("$buildDir/outputs/aar/module-release.aar")
 //        }
 
         aar(MavenPublication) {
@@ -108,7 +108,7 @@ artifactory {
     contextUrl = 'http://maven.worthnet.ir:8081/artifactory'
     publish {
         repository {
-            repoKey = 'libs-release-Local'
+            repoKey = 'libs-release-local'
 
             username = artifactory_username
             password = artifactory_password

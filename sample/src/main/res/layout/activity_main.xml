@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:gravity="center"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
     <epeyk.mobile.baseutil.views.TextViewCustom
         android:layout_width="wrap_content"
-        app:customFont="@string/app_font"
+        android:layout_height="wrap_content"
+        android:text="@string/error_occurred"
         android:textColor="@color/colorDark"
         android:textSize="@dimen/text_size_tiny"
-        android:text="@string/error_occurred"
-        android:layout_height="wrap_content" />
+        app:customFont="@string/app_font" />
+
+    <epeyk.mobile.baseutil.views.RoundedImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="#e1e1e1"
+        app:civ_radius="35.0"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+
+    <epeyk.mobile.baseutil.views.CircleImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="@dimen/margin_high"
+        android:background="#e1e1e1"
+        app:srcCompat="@mipmap/ic_launcher" />
+
 </LinearLayout>
