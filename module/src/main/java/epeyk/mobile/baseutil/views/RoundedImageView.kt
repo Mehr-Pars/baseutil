@@ -11,7 +11,9 @@ open class RoundedImageView : androidx.appcompat.widget.AppCompatImageView {
     private val clipPath = Path()
     private val rect = RectF(0f, 0f, this.width.toFloat(), this.height.toFloat())
 
-    constructor(context: Context) : super(context) {}
+    constructor(context: Context) : super(context) {
+
+    }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         initAttributes(context, attrs)

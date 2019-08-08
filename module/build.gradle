@@ -11,6 +11,8 @@ apply plugin: 'maven'
 def libraryGroupId = 'epeyk.mobile.lib'
 def libraryArtifactId = 'baseutil'
 def libraryVersion = project.versionName
+//upload new version command
+//gradlew.bat assembleRelease artifactoryPublish
 
 android {
     signingConfigs {
@@ -75,7 +77,7 @@ publishing {
             groupId libraryGroupId
             version libraryVersion
             artifactId libraryArtifactId
-            artifact("$buildDir/outputs/aar/app-release.aar")
+            artifact("$buildDir/outputs/aar/module-release.aar")
 
             //The publication doesn't know about our dependencies, so we have to manually add them to the pom
             pom.withXml {
