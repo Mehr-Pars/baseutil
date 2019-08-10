@@ -40,7 +40,9 @@ open class TextViewCustom : AppCompatTextView {
 
     private fun setCustomFont(ctx: Context, attrs: AttributeSet) {
         val a = ctx.obtainStyledAttributes(attrs, R.styleable.TextViewCustom)
-        val customFont = a.getString(R.styleable.TextViewCustom_customFont)
+        val customFont =
+            if (a.hasValue(R.styleable.TextViewCustom_customFont)) a.getString(R.styleable.TextViewCustom_customFont)
+            else ctx.getString(R.string.app_font)
         setCustomFont(ctx, customFont)
         a.recycle()
     }

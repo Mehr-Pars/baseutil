@@ -11,8 +11,7 @@
         android:layout_height="wrap_content"
         android:text="@string/error_occurred"
         android:textColor="@color/colorDark"
-        android:textSize="@dimen/text_size_tiny"
-        app:customFont="@string/app_font" />
+        android:textSize="@dimen/text_size_tiny"/>
 
     <epeyk.mobile.baseutil.views.RoundedImageView
         android:layout_width="150dp"
