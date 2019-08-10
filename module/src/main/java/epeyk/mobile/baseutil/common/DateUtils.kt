@@ -73,4 +73,11 @@ object DateUtils {
         return null
     }
 
+    fun getTimeString(millis: Int): String {
+        val second = (millis / 1000 % 60).toLong()
+        val minute = (millis / (1000 * 60) % 60).toLong()
+        val hour = (millis / (1000 * 60 * 60) % 24).toLong()
+        return if (hour > 0) String.format("%02d:%02d:%02d", hour, minute, second)
+        else String.format("%02d:%02d", minute, second)
+    }
 }

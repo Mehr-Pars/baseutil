@@ -1,9 +1,8 @@
 package epeyk.mobile.baseutil.common
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.*
-import android.util.Log
+import android.graphics.Typeface
+import epeyk.mobile.baseutil.R
 import java.io.FileInputStream
 import java.io.IOException
 import java.nio.charset.Charset
@@ -62,11 +61,15 @@ object Utils {
         return dataDir
     }
 
-    fun getTimeString(millis: Int): String {
-        val second = (millis / 1000 % 60).toLong()
-        val minute = (millis / (1000 * 60) % 60).toLong()
-        val hour = (millis / (1000 * 60 * 60) % 24).toLong()
-        return if (hour > 0) String.format("%02d:%02d:%02d", hour, minute, second)
-        else String.format("%02d:%02d", minute, second)
+    fun getAppFont(context: Context): Typeface {
+        return Typeface.createFromAsset(context.assets, context.getString(R.string.app_font))
+    }
+
+    fun getAppFontBold(context: Context): Typeface {
+        return Typeface.createFromAsset(context.assets, context.getString(R.string.app_font_bold))
+    }
+
+    fun getAppFontFarsiNumbers(context: Context): Typeface {
+        return Typeface.createFromAsset(context.assets, context.getString(R.string.app_font_farsi_num))
     }
 }
