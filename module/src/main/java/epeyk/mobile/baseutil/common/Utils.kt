@@ -60,16 +60,4 @@ object Utils {
         }
         return dataDir
     }
-
-    fun getAppFont(context: Context): Typeface {
-        return Typeface.createFromAsset(context.assets, context.getString(R.string.app_font))
-    }
-
-    fun getAppFontBold(context: Context): Typeface {
-        return Typeface.createFromAsset(context.assets, context.getString(R.string.app_font_bold))
-    }
-
-    fun getAppFontFarsiNumbers(context: Context): Typeface {
-        return Typeface.createFromAsset(context.assets, context.getString(R.string.app_font_farsi_num))
-    }
 }
