@@ -1,7 +1,6 @@
 package epeyk.mobile.baseutil.views
 
 import android.content.Context
-import android.graphics.Typeface
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.util.Linkify
@@ -10,6 +9,7 @@ import android.view.Gravity
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
 import epeyk.mobile.baseutil.R
+import epeyk.mobile.baseutil.common.FontManager
 
 
 open class EditTextCustom : AppCompatEditText {
@@ -79,16 +79,11 @@ open class EditTextCustom : AppCompatEditText {
     }
 
     fun setCustomFont(ctx: Context, asset: String?): Boolean {
-        val tf: Typeface
-
-        if (TextViewCustom.typeFaceMap.containsKey(asset)) {
-            tf = TextViewCustom.typeFaceMap[asset]!!
-        } else {
-            tf = Typeface.createFromAsset(ctx.assets, asset)
-            TextViewCustom.typeFaceMap[asset!!] = tf
+        asset?.let {
+            typeface = FontManager.getFont(ctx, asset)
+            return true
         }
-        typeface = tf
-        return true
+        return false
     }
 
     override fun onTextChanged(text: CharSequence, start: Int, lengthBefore: Int, lengthAfter: Int) {

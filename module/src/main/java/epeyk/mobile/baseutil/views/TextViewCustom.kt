@@ -1,20 +1,16 @@
 package epeyk.mobile.baseutil.views
 
 import android.content.Context
-import android.graphics.Typeface
 import android.text.util.Linkify
 import android.util.AttributeSet
 import android.view.Gravity
 import androidx.appcompat.widget.AppCompatTextView
 import epeyk.mobile.baseutil.R
+import epeyk.mobile.baseutil.common.FontManager
 
 open class TextViewCustom : AppCompatTextView {
     private var forceGravity = false
     private var defaultGravity = 0
-
-    companion object {
-        var typeFaceMap = mutableMapOf<String, Typeface>()
-    }
 
     constructor(context: Context) : super(context) {}
 
@@ -50,16 +46,11 @@ open class TextViewCustom : AppCompatTextView {
     }
 
     fun setCustomFont(ctx: Context, asset: String?): Boolean {
-        val tf: Typeface
-
-        if (typeFaceMap.containsKey(asset)) {
-            tf = typeFaceMap[asset]!!
-        } else {
-            tf = Typeface.createFromAsset(ctx.assets, asset)
-            typeFaceMap[asset!!] = tf
+        asset?.let {
+            typeface = FontManager.getFont(ctx, asset)
+            return true
         }
-        typeface = tf
-        return true
+        return false
     }
 
     override fun onTextChanged(text: CharSequence, start: Int, lengthBefore: Int, lengthAfter: Int) {
