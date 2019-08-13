@@ -86,7 +86,3 @@ class NumberTextWatcherForThousand(private var editText: EditText) : TextWatcher
         }
     }
 }
-
-fun main() {
-    println(NumberTextWatcherForThousand.getDecimalFormattedString("9000000"))
-}

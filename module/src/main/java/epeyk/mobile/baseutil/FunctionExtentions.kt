@@ -18,6 +18,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.LayoutRes
 import androidx.databinding.BindingAdapter
 import epeyk.mobile.baseutil.common.NumberTextWatcherForThousand
+import epeyk.mobile.baseutil.common.TextUtils
 
 fun View.visible() {
     visibility = View.VISIBLE
@@ -117,6 +118,15 @@ enum class EnumToastType(val value: Int) {
 
 @BindingAdapter("price")
 fun setPrice(textView: TextView, price: Int?) {
-    val formatted = NumberTextWatcherForThousand.getDecimalFormattedString(price.toString())
-    textView.context.getString(R.string._rials, formatted)
+    setPrice(textView, price.toString())
+}
+
+@BindingAdapter("price")
+fun setPrice(textView: TextView, price: String?) {
+    if (!TextUtils.isEmpty(price)) {
+        val formatted = NumberTextWatcherForThousand.getDecimalFormattedString(price!!)
+        textView.text = textView.context.getString(R.string.price_rials, formatted)
+    } else {
+        textView.text = textView.context.getString(R.string.price_rials, "0")
+    }
 }
