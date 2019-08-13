@@ -15,4 +15,5 @@
     <string name="confirm">تایید</string>
     <string name="cancel">انصراف</string>
     <string name="save">ذخیره</string>
+    <string name="_rials">%s ریال</string>
 </resources>
