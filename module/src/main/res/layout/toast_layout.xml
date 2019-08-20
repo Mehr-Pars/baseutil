@@ -19,6 +19,5 @@
         android:text="@string/error_occurred"
         android:textColor="@color/colorGrayDark"
         android:textSize="@dimen/text_size_mini"
-        app:customFont="@string/app_font"
         app:forceGravity="true" />
 </LinearLayout>

@@ -2,7 +2,7 @@
 <resources>
     <!-- TextViewCustom Attribute -->
     <declare-styleable name="TextViewCustom">
-        <attr name="customFont" format="string" />
+        <attr name="customFont" format="reference" />
         <attr name="forceGravity" format="boolean" />
     </declare-styleable>
 

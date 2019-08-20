@@ -73,16 +73,14 @@ open class EditTextCustom : AppCompatEditText {
 
     private fun setCustomFont(ctx: Context, attrs: AttributeSet) {
         val a = ctx.obtainStyledAttributes(attrs, R.styleable.TextViewCustom)
-        val customFont =
-            if (a.hasValue(R.styleable.TextViewCustom_customFont)) a.getString(R.styleable.TextViewCustom_customFont)
-            else ctx.getString(R.string.app_font)
+        val customFont = a.getResourceId(R.styleable.TextViewCustom_customFont, R.font.iransans)
         setCustomFont(ctx, customFont)
         a.recycle()
     }
 
-    fun setCustomFont(ctx: Context, asset: String?): Boolean {
-        asset?.let {
-            typeface = FontManager.getFont(ctx, asset)
+    fun setCustomFont(ctx: Context, resource: Int?): Boolean {
+        resource?.let {
+            typeface = FontManager.getFont(ctx, resource)
             return true
         }
         return false

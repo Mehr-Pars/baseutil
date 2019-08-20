@@ -2,32 +2,30 @@ package epeyk.mobile.baseutil.common
 
 import android.content.Context
 import android.graphics.Typeface
+import androidx.core.content.res.ResourcesCompat
 import epeyk.mobile.baseutil.R
 
 object FontManager {
-    private val typeFaceMap = mutableMapOf<String, Typeface>()
+    private val typeFaceMap = mutableMapOf<Int, Typeface>()
 
     fun getAppFont(context: Context): Typeface {
-        val appFont = context.getString(R.string.app_font)
-        return getFont(context, appFont)
+        return getFont(context, R.font.iransans)
     }
 
     fun getAppFontBold(context: Context): Typeface {
-        val appFontBold = context.getString(R.string.app_font_bold)
-        return getFont(context, appFontBold)
+        return getFont(context, R.font.iransans_bold)
     }
 
     fun getAppFontFarsiNumbers(context: Context): Typeface {
-        val appFontFarsiNumbers = context.getString(R.string.app_font_farsi_num)
-        return getFont(context, appFontFarsiNumbers)
+        return getFont(context, R.font.iransans_farsi_numbers)
     }
 
-    fun getFont(context: Context, asset: String): Typeface {
-        return if (typeFaceMap.containsKey(asset)) {
-            typeFaceMap[asset]!!
+    fun getFont(context: Context, resource: Int): Typeface {
+        return if (typeFaceMap.containsKey(resource)) {
+            typeFaceMap[resource]!!
         } else {
-            val typeface = Typeface.createFromAsset(context.assets, asset)
-            typeFaceMap[asset] = typeface
+            val typeface = ResourcesCompat.getFont(context, resource) ?: Typeface.DEFAULT
+            typeFaceMap[resource] = typeface
             typeface
         }
     }
