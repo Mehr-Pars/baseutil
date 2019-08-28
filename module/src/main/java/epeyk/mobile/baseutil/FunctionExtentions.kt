@@ -19,7 +19,9 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.BindingAdapter
 import epeyk.mobile.baseutil.common.NumberTextWatcherForThousand
 import epeyk.mobile.baseutil.common.TextUtils
+import java.util.regex.Pattern
 
+// region View
 fun View.visible() {
     visibility = View.VISIBLE
 }
@@ -35,6 +37,9 @@ fun View.gone() {
 fun ViewGroup.inflate(@LayoutRes resId: Int): View =
     LayoutInflater.from(this.context).inflate(resId, this, false)
 
+//endregion
+
+// region String
 fun String.limitString(limit: Int): String {
     return if (length > limit) substring(0, limit - 3) + "..." else this
 }
@@ -45,6 +50,13 @@ fun String.isNumeric(): Boolean {
     return true
 }
 
+fun String.extractNumbers(): String {
+    val pattern = Pattern.compile("[^0-9]")
+    return pattern.matcher(this).replaceAll("")
+}
+//endregion
+
+// region ImageView
 fun ImageView.setTint(@ColorInt color: Int) {
     setColorFilter(color)
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -58,7 +70,9 @@ fun ImageView.grayScale() {
     val filter = ColorMatrixColorFilter(matrix)
     colorFilter = filter
 }
+//endregion
 
+// region Context
 fun Activity.hideKeyBoard() {
     try {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -116,17 +130,4 @@ enum class EnumToastType(val value: Int) {
     }
 }
 
-@BindingAdapter("price")
-fun setPrice(textView: TextView, price: Int?) {
-    setPrice(textView, price.toString())
-}
-
-@BindingAdapter("price")
-fun setPrice(textView: TextView, price: String?) {
-    if (!TextUtils.isEmpty(price)) {
-        val formatted = NumberTextWatcherForThousand.getDecimalFormattedString(price!!)
-        textView.text = textView.context.getString(R.string.price_rials, formatted)
-    } else {
-        textView.text = textView.context.getString(R.string.price_rials, "0")
-    }
-}
+//endregion
