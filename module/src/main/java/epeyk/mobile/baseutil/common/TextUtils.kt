@@ -1,5 +1,7 @@
 package epeyk.mobile.baseutil.common
 
+import android.content.Context
+import epeyk.mobile.baseutil.R
 import java.util.HashMap
 import java.util.regex.Pattern
 
@@ -95,5 +97,15 @@ object TextUtils {
             false
         }
 
+    }
+
+    fun getPriceFormatted(context: Context, price: String?): String {
+        return if (!TextUtils.isEmpty(price)) {
+            val formatted =
+                NumberTextWatcherForThousand.getDecimalFormattedString(price!!)
+            context.getString(R.string.price_rials, formatted)
+        } else {
+            context.getString(R.string.price_rials, "0")
+        }
     }
 }
