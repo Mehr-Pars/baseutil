@@ -3,6 +3,7 @@
     <color name="defaultBackground">#ffffff</color>
     <color name="colorPrimary">#44C062</color>
     <color name="colorPrimaryDark">#2EAD4D</color>
+    <color name="colorPrimaryLight">#6ED586</color>
     <color name="colorAccent">#44C062</color>
     <color name="colorPrimaryDim32">#3244C062</color>
     <color name="colorPrimaryDim64">#6444C062</color>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="@dimen/dialog_width"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginLeft="@dimen/margin_extra"
+    android:layout_marginRight="@dimen/margin_extra"
+    android:background="@drawable/message_shadow"
+    android:minHeight="@dimen/dialog_min_height">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.02" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.978" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.918" />
+
+    <epeyk.mobile.baseutil.views.RoundedImageView
+        android:id="@+id/background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/dialog_gradient"
+        app:civ_radius="18.0"
+        app:layout_constraintBottom_toTopOf="@id/bottom"
+        app:layout_constraintLeft_toRightOf="@id/left"
+        app:layout_constraintRight_toLeftOf="@id/right"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <epeyk.mobile.baseutil.views.TextViewCustom
+        android:id="@+id/text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:lineSpacingExtra="10dp"
+        android:paddingLeft="@dimen/margin_high"
+        android:paddingTop="@dimen/margin_very_high"
+        android:paddingRight="@dimen/margin_high"
+        android:paddingBottom="@dimen/margin_very_high"
+        android:textColor="@color/colorGrayDarker"
+        android:textSize="@dimen/text_size_very_mini"
+        app:forceGravity="true"
+        app:layout_constraintBottom_toTopOf="@id/confirm"
+        app:layout_constraintLeft_toLeftOf="@id/left"
+        app:layout_constraintRight_toRightOf="@id/right"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="آیا میخواهید از برنامه خارج شوید؟" />
+
+    <epeyk.mobile.baseutil.views.TextViewCustom
+        android:id="@+id/confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/button_height_low"
+        android:layout_marginBottom="@dimen/margin_very_high"
+        android:background="@drawable/btn_radius_primary"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:minWidth="@dimen/button_width_small"
+        android:text="@string/confirm"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/text_size_small"
+        app:forceGravity="true"
+        app:layout_constraintBottom_toBottomOf="@id/bottom"
+        app:layout_constraintLeft_toLeftOf="@id/left"
+        app:layout_constraintRight_toLeftOf="@id/cancel" />
+
+    <epeyk.mobile.baseutil.views.TextViewCustom
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/button_height_low"
+        android:layout_marginBottom="@dimen/margin_very_high"
+        android:background="@drawable/btn_radius_stroke_primary"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:minWidth="@dimen/button_width_small"
+        android:text="@string/cancel"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_small"
+        app:forceGravity="true"
+        app:layout_constraintBottom_toBottomOf="@id/bottom"
+        app:layout_constraintLeft_toRightOf="@id/confirm"
+        app:layout_constraintRight_toRightOf="@id/right" />
+</androidx.constraintlayout.widget.ConstraintLayout>

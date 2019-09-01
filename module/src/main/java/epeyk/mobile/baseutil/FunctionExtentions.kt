@@ -1,15 +1,15 @@
 package epeyk.mobile.baseutil
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
@@ -80,7 +80,6 @@ fun Activity.hideKeyBoard() {
     } catch (e: Exception) {
         e.printStackTrace()
     }
-
 }
 
 fun Context.makeToast(text: String, duration: Int, type: Int): Toast? {
@@ -116,6 +115,42 @@ fun Context.makeToast(text: String, duration: Int, type: EnumToastType): Toast? 
     return null
 }
 
+val EMPTY_LAMBDA: (Dialog) -> Unit = {}
+fun Context.showDialog(
+    dialogText: String,
+    confirmAction: (Dialog) -> Unit = EMPTY_LAMBDA,
+    cancelAction: (Dialog) -> Unit = EMPTY_LAMBDA,
+    confirmBtnText: String = getString(R.string.confirm),
+    cancelBtnText: String = getString(R.string.cancel),
+    hideCancelBtn: Boolean = true,
+    cancelable: Boolean = true
+) {
+    val dialog = Dialog(this)
+    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    dialog.setCanceledOnTouchOutside(cancelable)
+    dialog.setCancelable(cancelable)
+    dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    dialog.setContentView(R.layout.dialog_simple)
+
+    dialog.findViewById<TextView>(R.id.text).text = dialogText
+    val cancelBtn = dialog.findViewById<TextView>(R.id.cancel)
+    val confirmBtn = dialog.findViewById<TextView>(R.id.confirm)
+    cancelBtn.text = cancelBtnText
+    confirmBtn.text = confirmBtnText
+    cancelBtn.setOnClickListener {
+        if (cancelAction != EMPTY_LAMBDA) cancelAction(dialog)
+        else dialog.dismiss()
+    }
+    confirmBtn.setOnClickListener {
+        if (confirmAction != EMPTY_LAMBDA) confirmAction(dialog)
+        else dialog.dismiss()
+    }
+    if (cancelAction == EMPTY_LAMBDA && hideCancelBtn)
+        cancelBtn.visibility = View.GONE
+
+    dialog.show()
+}
+
 enum class EnumToastType(val value: Int) {
     TOAST_TYPE_NORMAL(0), TOAST_TYPE_SUCCESS(1), TOAST_TYPE_ERROR(-1);
 
@@ -129,5 +164,20 @@ enum class EnumToastType(val value: Int) {
         }
     }
 }
-
 //endregion
+
+@BindingAdapter("price")
+fun setPrice(textView: TextView, price: Int?) {
+    setPrice(textView, price.toString())
+}
+
+@BindingAdapter("price")
+fun setPrice(textView: TextView, price: String?) {
+    if (!TextUtils.isEmpty(price)) {
+        val formatted =
+            NumberTextWatcherForThousand.getDecimalFormattedString(price!!)
+        textView.text = textView.context.getString(R.string.price_rials, formatted)
+    } else {
+        textView.text = textView.context.getString(R.string.price_rials, "0")
+    }
+}

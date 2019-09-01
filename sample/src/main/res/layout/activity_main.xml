@@ -6,34 +6,24 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <epeyk.mobile.baseutil.views.TextViewCustom
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/showSimpleDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/error_occurred"
-        android:textColor="@color/colorDark"
-        android:textSize="@dimen/text_size_tiny"/>
-
-    <epeyk.mobile.baseutil.views.TextViewCustom
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1234567890"
-        app:customFont="@font/iransans_farsi_numbers"
-        android:textColor="@color/colorDark"
-        android:textSize="@dimen/text_size_tiny"/>
-
-    <epeyk.mobile.baseutil.views.RoundedImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:background="#e1e1e1"
-        app:civ_radius="35.0"
-        app:srcCompat="@mipmap/ic_launcher" />
-
+        android:text="show dialog" />
 
     <epeyk.mobile.baseutil.views.CircleImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="@dimen/margin_high"
         android:background="#e1e1e1"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+    <epeyk.mobile.baseutil.views.RoundedImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="#e1e1e1"
+        app:civ_radius="35.0"
         app:srcCompat="@mipmap/ic_launcher" />
 
 </LinearLayout>

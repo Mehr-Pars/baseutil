@@ -98,14 +98,4 @@ object TextUtils {
         }
 
     }
-
-    fun getPriceFormatted(context: Context, price: String?): String {
-        return if (!TextUtils.isEmpty(price)) {
-            val formatted =
-                NumberTextWatcherForThousand.getDecimalFormattedString(price!!)
-            context.getString(R.string.price_rials, formatted)
-        } else {
-            context.getString(R.string.price_rials, "0")
-        }
-    }
 }
