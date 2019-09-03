@@ -47,4 +47,7 @@
 
     <dimen name="edit_text_height_normal">36.0dp</dimen>
     <dimen name="action_bar_height">38.4dp</dimen>
+    <dimen name="divider_width">0.7dp</dimen>
+    <dimen name="dialog_width">240dp</dimen>
+    <dimen name="dialog_min_height">128dp</dimen>
 </resources>

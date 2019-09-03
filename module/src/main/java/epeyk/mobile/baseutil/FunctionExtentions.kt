@@ -17,6 +17,8 @@ import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.annotation.LayoutRes
 import androidx.databinding.BindingAdapter
+import com.google.gson.JsonNull
+import com.google.gson.JsonObject
 import epeyk.mobile.baseutil.common.NumberTextWatcherForThousand
 import epeyk.mobile.baseutil.common.TextUtils
 import java.util.regex.Pattern
@@ -114,6 +116,19 @@ fun Context.makeToast(text: String, duration: Int, type: EnumToastType): Toast? 
 
     return null
 }
+enum class EnumToastType(val value: Int) {
+    TOAST_TYPE_NORMAL(0), TOAST_TYPE_SUCCESS(1), TOAST_TYPE_ERROR(-1);
+
+    companion object {
+        fun byValue(`val`: Int): EnumToastType {
+            for (item in values()) {
+                if (item.value == `val`)
+                    return item
+            }
+            return TOAST_TYPE_NORMAL
+        }
+    }
+}
 
 val EMPTY_LAMBDA: (Dialog) -> Unit = {}
 fun Context.showDialog(
@@ -150,19 +165,31 @@ fun Context.showDialog(
 
     dialog.show()
 }
+//endregion
 
-enum class EnumToastType(val value: Int) {
-    TOAST_TYPE_NORMAL(0), TOAST_TYPE_SUCCESS(1), TOAST_TYPE_ERROR(-1);
+// region JsonObject
+fun JsonObject.optString(key: String): String {
+    val element = get(key)
+    if (element != null && element !== JsonNull.INSTANCE)
+        return element.asString
 
-    companion object {
-        fun byValue(`val`: Int): EnumToastType {
-            for (item in values()) {
-                if (item.value == `val`)
-                    return item
-            }
-            return TOAST_TYPE_NORMAL
-        }
-    }
+    return ""
+}
+
+fun JsonObject.optInt(key: String, defaultValue: Int = 0): Int {
+    val element = get(key)
+    if (element != null && element !== JsonNull.INSTANCE)
+        return element.asInt
+
+    return defaultValue
+}
+
+fun JsonObject.optBoolean(key: String, defaultValue: Boolean = false): Boolean {
+    val element = get(key)
+    if (element != null && element !== JsonNull.INSTANCE)
+        return element.asBoolean
+
+    return defaultValue
 }
 //endregion
 
