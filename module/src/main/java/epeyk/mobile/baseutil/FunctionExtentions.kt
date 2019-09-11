@@ -7,6 +7,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
+import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.view.*
@@ -23,6 +24,7 @@ import epeyk.mobile.baseutil.common.NumberTextWatcherForThousand
 import epeyk.mobile.baseutil.common.TextUtils
 import java.util.regex.Pattern
 
+
 // region View
 fun View.visible() {
     visibility = View.VISIBLE
@@ -35,6 +37,23 @@ fun View.inVisible() {
 fun View.gone() {
     visibility = View.GONE
 }
+
+fun View.hideKeyBoard() {
+    clearFocus()
+    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(windowToken, 0)
+}
+
+fun View.showKeyBoard() {
+    try {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+        requestFocus()
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+}
+
 
 fun ViewGroup.inflate(@LayoutRes resId: Int): View =
     LayoutInflater.from(this.context).inflate(resId, this, false)
@@ -84,6 +103,15 @@ fun Activity.hideKeyBoard() {
     }
 }
 
+fun Context.showKeyBoard() {
+    try {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+}
+
 fun Context.makeToast(text: String, duration: Int, type: Int): Toast? {
     return makeToast(text, duration, EnumToastType.byValue(type))
 }
@@ -116,6 +144,7 @@ fun Context.makeToast(text: String, duration: Int, type: EnumToastType): Toast? 
 
     return null
 }
+
 enum class EnumToastType(val value: Int) {
     TOAST_TYPE_NORMAL(0), TOAST_TYPE_SUCCESS(1), TOAST_TYPE_ERROR(-1);
 
@@ -206,5 +235,14 @@ fun setPrice(textView: TextView, price: String?) {
         textView.text = textView.context.getString(R.string.price_rials, formatted)
     } else {
         textView.text = textView.context.getString(R.string.price_rials, "0")
+    }
+}
+
+@BindingAdapter("showStrike")
+fun showStrike(textView: TextView, show: Boolean?) {
+    if (show == true) {
+        textView.paintFlags = textView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+    } else {
+        textView.paintFlags = Paint.LINEAR_TEXT_FLAG
     }
 }
