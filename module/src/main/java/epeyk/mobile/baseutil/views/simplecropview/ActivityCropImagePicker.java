@@ -17,6 +17,7 @@ import android.text.format.DateFormat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -47,7 +48,7 @@ public class ActivityCropImagePicker extends Activity {
         bindViews();
 
         mCropView.setEnabled(false);
-        mCropView.setOutputMaxSize(600,600);
+        mCropView.setOutputMaxSize(600, 600);
         showDialogSelectImage();
     }
 
@@ -94,7 +95,9 @@ public class ActivityCropImagePicker extends Activity {
 
     private void bindViews() {
         mCropView = (CropImageView) findViewById(R.id.cropImageView);
-        findViewById(R.id.buttonDone).setOnClickListener(btnListener);
+        ImageButton btnDone = findViewById(R.id.buttonDone);
+        btnDone.setOnClickListener(btnListener);
+        btnDone.setImageResource(R.drawable.ic_done_black_24dp);
         findViewById(R.id.buttonPickImage).setOnClickListener(btnListener);
         findViewById(R.id.buttonCaptureImage).setOnClickListener(btnListener);
         findViewById(R.id.buttonRotateLeft).setOnClickListener(btnListener);
@@ -233,8 +236,8 @@ public class ActivityCropImagePicker extends Activity {
     private final SaveCallback mSaveCallback = new SaveCallback() {
         @Override
         public void onSuccess(Uri outputUri) {
-//            dismissProgress();
-
+            dismissProgress();
+            startResultActivity(outputUri.getPath());
 
         }
 
