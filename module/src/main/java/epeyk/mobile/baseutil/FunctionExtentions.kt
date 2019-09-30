@@ -1,15 +1,16 @@
 package epeyk.mobile.baseutil
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
+import android.graphics.Paint
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
@@ -17,9 +18,14 @@ import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.annotation.LayoutRes
 import androidx.databinding.BindingAdapter
+import com.google.gson.JsonNull
+import com.google.gson.JsonObject
 import epeyk.mobile.baseutil.common.NumberTextWatcherForThousand
 import epeyk.mobile.baseutil.common.TextUtils
+import java.util.regex.Pattern
 
+
+// region View
 fun View.visible() {
     visibility = View.VISIBLE
 }
@@ -32,9 +38,29 @@ fun View.gone() {
     visibility = View.GONE
 }
 
+fun View.hideKeyBoard() {
+    clearFocus()
+    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(windowToken, 0)
+}
+
+fun View.showKeyBoard() {
+    try {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+        requestFocus()
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+}
+
+
 fun ViewGroup.inflate(@LayoutRes resId: Int): View =
     LayoutInflater.from(this.context).inflate(resId, this, false)
 
+//endregion
+
+// region String
 fun String.limitString(limit: Int): String {
     return if (length > limit) substring(0, limit - 3) + "..." else this
 }
@@ -45,6 +71,13 @@ fun String.isNumeric(): Boolean {
     return true
 }
 
+fun String.extractNumbers(): String {
+    val pattern = Pattern.compile("[^0-9]")
+    return pattern.matcher(this).replaceAll("")
+}
+//endregion
+
+// region ImageView
 fun ImageView.setTint(@ColorInt color: Int) {
     setColorFilter(color)
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -58,7 +91,9 @@ fun ImageView.grayScale() {
     val filter = ColorMatrixColorFilter(matrix)
     colorFilter = filter
 }
+//endregion
 
+// region Context
 fun Activity.hideKeyBoard() {
     try {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -66,7 +101,15 @@ fun Activity.hideKeyBoard() {
     } catch (e: Exception) {
         e.printStackTrace()
     }
+}
 
+fun Context.showKeyBoard() {
+    try {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
 }
 
 fun Context.makeToast(text: String, duration: Int, type: Int): Toast? {
@@ -116,6 +159,69 @@ enum class EnumToastType(val value: Int) {
     }
 }
 
+val EMPTY_LAMBDA: (Dialog) -> Unit = {}
+fun Context.showDialog(
+    dialogText: String,
+    confirmAction: (Dialog) -> Unit = EMPTY_LAMBDA,
+    cancelAction: (Dialog) -> Unit = EMPTY_LAMBDA,
+    confirmBtnText: String = getString(R.string.confirm),
+    cancelBtnText: String = getString(R.string.cancel),
+    hideCancelBtn: Boolean = true,
+    cancelable: Boolean = true
+) {
+    val dialog = Dialog(this)
+    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    dialog.setCanceledOnTouchOutside(cancelable)
+    dialog.setCancelable(cancelable)
+    dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    dialog.setContentView(R.layout.dialog_simple)
+
+    dialog.findViewById<TextView>(R.id.text).text = dialogText
+    val cancelBtn = dialog.findViewById<TextView>(R.id.cancel)
+    val confirmBtn = dialog.findViewById<TextView>(R.id.confirm)
+    cancelBtn.text = cancelBtnText
+    confirmBtn.text = confirmBtnText
+    cancelBtn.setOnClickListener {
+        if (cancelAction != EMPTY_LAMBDA) cancelAction(dialog)
+        else dialog.dismiss()
+    }
+    confirmBtn.setOnClickListener {
+        if (confirmAction != EMPTY_LAMBDA) confirmAction(dialog)
+        else dialog.dismiss()
+    }
+    if (cancelAction == EMPTY_LAMBDA && hideCancelBtn)
+        cancelBtn.visibility = View.GONE
+
+    dialog.show()
+}
+//endregion
+
+// region JsonObject
+fun JsonObject.optString(key: String): String {
+    val element = get(key)
+    if (element != null && element !== JsonNull.INSTANCE)
+        return element.asString
+
+    return ""
+}
+
+fun JsonObject.optInt(key: String, defaultValue: Int = 0): Int {
+    val element = get(key)
+    if (element != null && element !== JsonNull.INSTANCE)
+        return element.asInt
+
+    return defaultValue
+}
+
+fun JsonObject.optBoolean(key: String, defaultValue: Boolean = false): Boolean {
+    val element = get(key)
+    if (element != null && element !== JsonNull.INSTANCE)
+        return element.asBoolean
+
+    return defaultValue
+}
+//endregion
+
 @BindingAdapter("price")
 fun setPrice(textView: TextView, price: Int?) {
     setPrice(textView, price.toString())
@@ -124,9 +230,19 @@ fun setPrice(textView: TextView, price: Int?) {
 @BindingAdapter("price")
 fun setPrice(textView: TextView, price: String?) {
     if (!TextUtils.isEmpty(price)) {
-        val formatted = NumberTextWatcherForThousand.getDecimalFormattedString(price!!)
+        val formatted =
+            NumberTextWatcherForThousand.getDecimalFormattedString(price!!)
         textView.text = textView.context.getString(R.string.price_rials, formatted)
     } else {
         textView.text = textView.context.getString(R.string.price_rials, "0")
+    }
+}
+
+@BindingAdapter("showStrike")
+fun showStrike(textView: TextView, show: Boolean?) {
+    if (show == true) {
+        textView.paintFlags = textView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+    } else {
+        textView.paintFlags = Paint.LINEAR_TEXT_FLAG
     }
 }
