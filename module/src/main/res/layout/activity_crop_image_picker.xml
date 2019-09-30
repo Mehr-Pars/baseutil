@@ -1,0 +1,179 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1C1C1C"
+    android:orientation="vertical" >
+
+    <epeyk.mobile.baseutil.views.simplecropview.CropImageView
+        android:id="@+id/cropImageView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp"
+        android:src="@drawable/default_back_image"
+        custom:scv_background_color="#1C1C1C"
+        custom:scv_crop_mode="free"
+        custom:scv_frame_color="#5DAC81"
+        custom:scv_frame_stroke_weight="1dp"
+        custom:scv_guide_color="#5DAC81"
+        custom:scv_guide_show_mode="show_always"
+        custom:scv_guide_stroke_weight="1dp"
+        custom:scv_handle_color="#5DAC81"
+        custom:scv_handle_show_mode="show_always"
+        custom:scv_handle_size="14dp"
+        custom:scv_min_frame_size="50dp"
+        custom:scv_overlay_color="#50000000"
+        custom:scv_touch_padding="8dp" />
+
+    <HorizontalScrollView
+        android:id="@+id/tab_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:orientation="horizontal"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp" >
+
+            <Button
+                android:id="@+id/buttonFitImage"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="4dp"
+                android:background="@drawable/selector_light"
+                android:padding="4dp"
+                android:text="FIT"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/button1_1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="4dp"
+                android:background="@drawable/selector_light"
+                android:padding="4dp"
+                android:text="SQUARE"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/button4_3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="4dp"
+                android:background="@drawable/selector_light"
+                android:padding="4dp"
+                android:text="4:3"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/button16_9"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="4dp"
+                android:background="@drawable/selector_light"
+                android:padding="4dp"
+                android:text="16:9"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/buttonFree"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="4dp"
+                android:background="@drawable/selector_light"
+                android:padding="4dp"
+                android:text="FREE"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/buttonCircle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="4dp"
+                android:background="@drawable/selector_light"
+                android:padding="4dp"
+                android:text="CIRCLE"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="#555555" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/cropImageView"
+        android:layout_centerHorizontal="true"
+        android:background="#1C1C1C"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/buttonPickImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/selector_light"
+            android:padding="16dp"
+            android:src="@drawable/ic_photo_library" />
+
+        <ImageButton
+            android:id="@+id/buttonCaptureImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/buttonPickImage"
+            android:background="@drawable/selector_light"
+            android:padding="16dp"
+            android:src="@drawable/ic_camera" />
+
+
+        <ImageButton
+            android:id="@+id/buttonRotateLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/buttonCaptureImage"
+            android:background="@drawable/selector_light"
+            android:padding="16dp"
+            android:src="@drawable/ic_rotate_left" />
+
+        <ImageButton
+            android:id="@+id/buttonRotateRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/buttonRotateLeft"
+            android:background="@drawable/selector_light"
+            android:padding="16dp"
+            android:src="@drawable/ic_rotate_right" />
+
+        <ImageButton
+            android:id="@+id/buttonDone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/selector_light"
+            android:padding="16dp"
+            custom:srcCompat="@drawable/ic_done_black_24dp"
+            android:tint="@android:color/white"/>
+    </RelativeLayout>
+
+</LinearLayout>

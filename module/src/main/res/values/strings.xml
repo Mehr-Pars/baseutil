@@ -16,4 +16,9 @@
     <string name="cancel">انصراف</string>
     <string name="save">ذخیره</string>
     <string name="price_rials">%s ریال</string>
+
+
+    <string name="choose_from_camera">استفاده از دوربین</string>
+    <string name="choose_from_gallery">استفاده از گالری تصاویر</string>
+    <string name="choose_avatar">انتخاب تصویر</string>
 </resources>
