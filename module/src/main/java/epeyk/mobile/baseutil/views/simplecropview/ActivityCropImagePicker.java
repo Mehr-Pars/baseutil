@@ -1,15 +1,18 @@
 package epeyk.mobile.baseutil.views.simplecropview;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -20,6 +23,9 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,6 +56,13 @@ public class ActivityCropImagePicker extends Activity {
         mCropView.setEnabled(false);
         mCropView.setOutputMaxSize(600, 600);
         showDialogSelectImage();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //Clear the Activity's bundle of the subsidiary fragments' bundles.
+        outState.clear();
     }
 
     public void showProgress() {
@@ -165,6 +178,9 @@ public class ActivityCropImagePicker extends Activity {
                 // showDialogSelectImage();
                 // pickImage();
             } else if (v.getId() == R.id.buttonCaptureImage) {
+                if (ContextCompat.checkSelfPermission(ActivityCropImagePicker.this, Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED)
+                    return;
                 final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Folder/";
                 File newdir = new File(dir);
                 newdir.mkdirs();
@@ -174,7 +190,12 @@ public class ActivityCropImagePicker extends Activity {
                     newfile.createNewFile();
                 } catch (IOException e) {
                 }
-                cameraFileUri = Uri.fromFile(newfile);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                    cameraFileUri = FileProvider.getUriForFile(ActivityCropImagePicker.this, getApplicationContext().getPackageName() + ".provider", newfile);
+                else
+                    cameraFileUri = Uri.fromFile(newfile);
+
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, cameraFileUri);
                 startActivityForResult(cameraIntent, REQUEST_TAKE_IMAGE);

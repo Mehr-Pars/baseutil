@@ -24,22 +24,6 @@ android {
         }
     }
 
-    packagingOptions {
-        // Exclude file to avoid
-        // Error: Duplicate files during packaging of APK
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/license.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/notice.txt'
-        exclude 'META-INF/ASL2.0'
-        exclude 'META-INF/services/javax.annotation.processing.Processor'
-    }
-    lintOptions {
-        disable 'InvalidPackage'
-    }
     compileSdkVersion project.compileSdkVersion.toInteger()
     defaultConfig {
         minSdkVersion project.minSdkVersion.toInteger()
@@ -80,7 +64,6 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.2.0-alpha03'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
-    implementation 'com.karumi:dexter:5.0.0'
     implementation 'com.google.code.gson:gson:2.8.5'
 }
 
