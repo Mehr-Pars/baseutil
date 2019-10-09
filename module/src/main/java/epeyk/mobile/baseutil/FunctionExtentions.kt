@@ -17,9 +17,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.google.gson.JsonNull
 import com.google.gson.JsonObject
+import com.readystatesoftware.systembartint.SystemBarTintManager
 import epeyk.mobile.baseutil.common.NumberTextWatcherForThousand
 import epeyk.mobile.baseutil.common.TextUtils
 import java.util.regex.Pattern
@@ -94,6 +97,21 @@ fun ImageView.grayScale() {
 //endregion
 
 // region Context
+fun AppCompatActivity.initStatusBar(colorResource: Int) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        val tintManager = SystemBarTintManager(this)
+        tintManager.isStatusBarTintEnabled = true
+        tintManager.setTintColor(ContextCompat.getColor(this, colorResource))
+    }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        window.decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        window.statusBarColor = resources.getColor(colorResource)
+        window.navigationBarColor = resources.getColor(colorResource)
+    }
+}
+
 fun Activity.hideKeyBoard() {
     try {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

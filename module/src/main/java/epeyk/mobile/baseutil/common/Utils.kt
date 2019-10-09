@@ -1,8 +1,6 @@
 package epeyk.mobile.baseutil.common
 
 import android.content.Context
-import android.graphics.Typeface
-import epeyk.mobile.baseutil.R
 import java.io.FileInputStream
 import java.io.IOException
 import java.nio.charset.Charset

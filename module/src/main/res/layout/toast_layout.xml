@@ -19,5 +19,6 @@
         android:text="@string/error_occurred"
         android:textColor="@color/colorGrayDark"
         android:textSize="@dimen/text_size_mini"
+        app:customFont="@font/iransans_farsi_numbers"
         app:forceGravity="true" />
 </LinearLayout>
