@@ -23,6 +23,7 @@ android {
             storePassword 'epeyk2014'
         }
     }
+
     compileSdkVersion project.compileSdkVersion.toInteger()
     defaultConfig {
         minSdkVersion project.minSdkVersion.toInteger()
