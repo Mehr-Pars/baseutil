@@ -9,6 +9,14 @@
         <item name="fontFamily">@font/iransans</item>
     </style>
 
+    <style name="Theme.Translucent" parent="BaseAppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@drawable/translucentBackground</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:colorForeground">#fff</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+    </style>
+
     <style name="EditTextStyle" parent="BaseAppTheme">
         <item name="android:gravity">center_vertical</item>
         <item name="android:paddingLeft">@dimen/margin_high</item>
