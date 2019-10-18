@@ -6,13 +6,19 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object DateUtils {
-    fun getPersianDate(time: Long): String {
-        val date = Date(time)
+
+    fun getPersianDateFromTimeStamp(timeStamp: Long): String {
+        val timeMillis = timeStamp * 1000
+        return getPersianDate(timeMillis)
+    }
+
+    fun getPersianDate(timeMillis: Long): String {
+        val date = Date(timeMillis)
         val calendar = ShamsiCalendar()
         val solarCalendar = calendar.SolarCalendar(date)
 
         val t = String.format("%2d:%2d:%2d", date.hours, date.minutes, date.seconds)
-        return  "${solarCalendar.year}-${solarCalendar.month}-${solarCalendar.date}_$t"
+        return "${solarCalendar.year}-${solarCalendar.month}-${solarCalendar.date}_$t"
     }
 
     fun getPersianDate(stringDate: String): String? {
@@ -23,7 +29,7 @@ object DateUtils {
             val calendar = ShamsiCalendar()
             val solarCalendar = calendar.SolarCalendar(date)
 
-            return  "${solarCalendar.year}-${solarCalendar.month}-${solarCalendar.date}"
+            return "${solarCalendar.year}-${solarCalendar.month}-${solarCalendar.date}"
         } catch (e: Exception) {
             e.printStackTrace()
         }
