@@ -16,6 +16,7 @@
     <color name="colorBlueLight">#D6E5F8</color>
     <color name="colorOrange">#D73E14</color>
     <color name="colorOrangeLight">#FD961F</color>
+    <color name="colorOrangeDim32">#32FD961F</color>
     <color name="colorPink">#FF3E7F</color>
     <color name="colorGray">#999999</color>
     <color name="colorGrayLight">#EFEFF4</color>
