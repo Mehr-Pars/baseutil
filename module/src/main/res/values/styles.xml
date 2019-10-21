@@ -18,7 +18,7 @@
     </style>
 
     <style name="EditTextStyle" parent="BaseAppTheme">
-        <item name="android:gravity">center_vertical</item>
+        <item name="android:gravity">center_vertical|right</item>
         <item name="android:paddingLeft">@dimen/margin_high</item>
         <item name="android:paddingRight">@dimen/margin_high</item>
         <item name="android:singleLine">true</item>

@@ -42,7 +42,7 @@ open class EditTextCustom : AppCompatEditText {
             }
 
             override fun afterTextChanged(s: Editable) {
-                if (s.toString().length <= 0)
+                if (s.toString().isEmpty())
                 //check if length is equal to zero
                     setHintTextColor(textColors.withAlpha(150))
             }

@@ -4,6 +4,7 @@
     <declare-styleable name="TextViewCustom">
         <attr name="customFont" format="reference" />
         <attr name="forceGravity" format="boolean" />
+        <attr name="mCursorDrawableRes" format="reference" />
     </declare-styleable>
 
     <!-- RoundedImageView Attribute -->
