@@ -12,14 +12,16 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.view.*
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.ColorInt
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import androidx.databinding.InverseBindingAdapter
+import androidx.databinding.InverseBindingListener
+import com.google.gson.JsonArray
 import com.google.gson.JsonNull
 import com.google.gson.JsonObject
 import com.readystatesoftware.systembartint.SystemBarTintManager
@@ -214,7 +216,7 @@ fun Context.showDialog(
 }
 //endregion
 
-// region JsonObject
+// region Json
 fun JsonObject.optString(key: String): String {
     val element = get(key)
     if (element != null && element !== JsonNull.INSTANCE)
@@ -238,8 +240,16 @@ fun JsonObject.optBoolean(key: String, defaultValue: Boolean = false): Boolean {
 
     return defaultValue
 }
+
+fun List<String>.toJsonArray(): JsonArray {
+    val array = JsonArray()
+    forEach { array.add(it) }
+
+    return array
+}
 //endregion
 
+// region BindingAdapter
 @BindingAdapter("price")
 fun setPrice(textView: TextView, price: Int?) {
     setPrice(textView, price.toString())
@@ -264,3 +274,28 @@ fun showStrike(textView: TextView, show: Boolean?) {
         textView.paintFlags = Paint.LINEAR_TEXT_FLAG
     }
 }
+
+// for AppCompatSpinner
+@BindingAdapter(value = ["selectedValue", "selectedValueAttrChanged"], requireAll = false)
+fun bindSpinnerData(
+    spinner: AppCompatSpinner, newSelectedValue: String?, newTextAttrChanged: InverseBindingListener
+) {
+    spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+            newTextAttrChanged.onChange()
+        }
+
+        override fun onNothingSelected(parent: AdapterView<*>) {}
+    }
+    if (newSelectedValue != null) {
+        val pos = (spinner.adapter as ArrayAdapter<String>).getPosition(newSelectedValue)
+        spinner.setSelection(pos, true)
+    }
+}
+
+// for AppCompatSpinner
+@InverseBindingAdapter(attribute = "selectedValue", event = "selectedValueAttrChanged")
+fun captureSelectedValue(pAppCompatSpinner: AppCompatSpinner): String {
+    return pAppCompatSpinner.selectedItem as String
+}
+// endregion
