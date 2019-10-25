@@ -2,31 +2,29 @@ package epeyk.mobile.baseutil.common
 
 import epeyk.mobile.baseutil.common.calendar.CalendarTool
 import epeyk.mobile.baseutil.common.calendar.ShamsiCalendar
-import java.text.SimpleDateFormat
 import java.util.*
 
 object DateUtils {
+    private const val dateFormat = "yyyy/MM/dd HH:mm:ss"
 
-    fun getPersianDateFromTimeStamp(timeStamp: Long, showTime: Boolean = false): String {
+    fun getPersianDateFromTimeStamp(timeStamp: Long, outputFormat: String = dateFormat): String? {
         val timeMillis = timeStamp * 1000
-        return getPersianDate(timeMillis, showTime)
+        return getPersianDate(timeMillis, outputFormat)
     }
 
-    fun getTimeStampFromPersianDate(stringDate: String): Long {
+    fun getTimeStampFromPersianDate(
+        stringDate: String,
+        format: String = dateFormat
+    ): Long {
         try {
-            val array =
-                if (stringDate.contains("-")) stringDate.split("-".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray() else stringDate.split(
-                    "/".toRegex()
-                ).dropLastWhile { it.isEmpty() }.toTypedArray()
+            val simpleDate = SimpleDate.getSimpleDate(stringDate, format)
             val calendarTool = CalendarTool()
-            calendarTool.setIranianDate(
-                Integer.parseInt(array[0]),
-                Integer.parseInt(array[1]),
-                Integer.parseInt(array[2])
-            )
-            val formatter = SimpleDateFormat("yyyy/MM/dd", Locale("en"))
-            val date = formatter.parse(calendarTool.gregorianDate) as Date
-            return date.time / 1000
+            calendarTool.setIranianDate(simpleDate.year, simpleDate.month, simpleDate.date)
+            simpleDate.year = calendarTool.gregorianYear
+            simpleDate.month = calendarTool.gregorianMonth
+            simpleDate.date = calendarTool.gregorianDay
+
+            return simpleDate.getDate().time / 1000
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -34,29 +32,27 @@ object DateUtils {
         return 0
     }
 
-    fun getPersianDate(timeMillis: Long, showTime: Boolean = false): String {
+    fun getPersianDate(timeMillis: Long, outputFormat: String = dateFormat): String? {
         val date = Date(timeMillis)
-        val calendar = ShamsiCalendar()
-        val solarCalendar = calendar.SolarCalendar(date)
-
-        val time = if (showTime) String.format(
-            " - %02d:%02d:%02d",
-            date.hours,
-            date.minutes,
-            date.seconds
-        ) else ""
-        return "%d/%d/%d$time".format(solarCalendar.year, solarCalendar.month, solarCalendar.date)
+        return getPersianDate(date, outputFormat)
     }
 
-    fun getPersianDate(stringDate: String): String? {
-        val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale("en"))
+    fun getPersianDate(
+        stringDate: String, inputFormat: String = dateFormat, outputFormat: String = dateFormat
+    ): String? {
+        val simpleDate = SimpleDate.getSimpleDate(stringDate, inputFormat)
+        return getPersianDate(simpleDate.getDate(), outputFormat)
+    }
+
+    fun getPersianDate(date: Date, outputFormat: String = dateFormat): String? {
         try {
-            val date = sdf.parse(stringDate.replace("T", " "))
+            val simpleDate = SimpleDate.getSimpleDate(date)
+            val solarCalendar = ShamsiCalendar().SolarCalendar(date)
 
-            val calendar = ShamsiCalendar()
-            val solarCalendar = calendar.SolarCalendar(date)
-
-            return "${solarCalendar.year}/${solarCalendar.month}/${solarCalendar.date}"
+            simpleDate.year = solarCalendar.year
+            simpleDate.month = solarCalendar.month
+            simpleDate.date = solarCalendar.date
+            return simpleDate.getStringDate(outputFormat)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -64,41 +60,20 @@ object DateUtils {
         return null
     }
 
-    fun getPersianDateComplete(stringDate: String): String? {
-        val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale("en"))
-        sdf.timeZone = TimeZone.getTimeZone("UTC")
+    fun getGregorianDate(
+        stringDate: String,
+        inputFormat: String = dateFormat,
+        outputFormat: String = dateFormat
+    ): String? {
         try {
-            val date = sdf.parse(stringDate.replace("T", " "))
-            sdf.timeZone = TimeZone.getTimeZone("GMT+4:30")
-            val calendar = ShamsiCalendar()
-            val solarCalendar = calendar.SolarCalendar(date)
-
-            return String.format(
-                Locale.US, "%02d:%02d , %d/%02d/%02d", date.hours, date.minutes,
-                solarCalendar.year, solarCalendar.month, solarCalendar.date
-            )
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        return null
-    }
-
-    fun getGregorianDate(stringDate: String): String? {
-
-        try {
-            val array =
-                if (stringDate.contains("-")) stringDate.split("-".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray() else stringDate.split(
-                    "/".toRegex()
-                ).dropLastWhile { it.isEmpty() }.toTypedArray()
+            val simpleDate = SimpleDate.getSimpleDate(stringDate, inputFormat)
             val calendarTool = CalendarTool()
-            calendarTool.setIranianDate(
-                Integer.parseInt(array[0]),
-                Integer.parseInt(array[1]),
-                Integer.parseInt(array[2])
-            )
+            calendarTool.setIranianDate(simpleDate.year, simpleDate.month, simpleDate.date)
 
-            return calendarTool.gregorianDate
+            simpleDate.year = calendarTool.gregorianYear
+            simpleDate.month = calendarTool.gregorianMonth
+            simpleDate.date = calendarTool.gregorianDay
+            return simpleDate.getStringDate(outputFormat)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -112,5 +87,100 @@ object DateUtils {
         val hour = (millis / (1000 * 60 * 60) % 24).toLong()
         return if (hour > 0) String.format("%02d:%02d:%02d", hour, minute, second)
         else String.format("%02d:%02d", minute, second)
+    }
+
+    @Throws(NumberFormatException::class)
+    private fun getTimeNumber(s: String, index: Pair<Int, Int>): Int {
+        val number = if (index.first >= 0 && index.second <= s.length)
+            s.substring(index.first, index.second)
+        else
+            "0"
+        return number.toInt()
+    }
+
+    class SimpleDate(
+        var year: Int = 0,
+        var month: Int = 0,
+        var date: Int = 0,
+        var hours: Int = 0,
+        var minutes: Int = 0,
+        var seconds: Int = 0
+    ) {
+        fun getStringDate(format: String = dateFormat): String {
+            return format.replace("yyyy", "$year")
+                .replace("MM", "%02d".format(month))
+                .replace("dd", "%02d".format(date))
+                .replace("HH", "%02d".format(hours))
+                .replace("mm", "%02d".format(minutes))
+                .replace("ss", "%02d".format(seconds))
+        }
+
+        fun getDate(): Date {
+            return Date().apply {
+                year = this@SimpleDate.year - 1900
+                month = this@SimpleDate.month - 1
+                date = this@SimpleDate.date
+                hours = this@SimpleDate.hours
+                minutes = this@SimpleDate.minutes
+                seconds = this@SimpleDate.seconds
+            }
+        }
+
+        override fun toString(): String {
+            return getStringDate()
+        }
+
+        companion object {
+            fun getSimpleDate(date: String, format: String = dateFormat): SimpleDate {
+                return try {
+                    SimpleDate().apply {
+                        seconds =
+                            getTimeNumber(
+                                date,
+                                Pair(format.indexOf("s"), format.lastIndexOf('s') + 1)
+                            )
+                        minutes =
+                            getTimeNumber(
+                                date,
+                                Pair(format.indexOf("m"), format.lastIndexOf('m') + 1)
+                            )
+                        hours =
+                            getTimeNumber(
+                                date,
+                                Pair(format.indexOf("H"), format.lastIndexOf('H') + 1)
+                            )
+                        this.date =
+                            getTimeNumber(
+                                date,
+                                Pair(format.indexOf("d"), format.lastIndexOf('d') + 1)
+                            )
+                        month =
+                            getTimeNumber(
+                                date,
+                                Pair(format.indexOf("M"), format.lastIndexOf('M') + 1)
+                            )
+                        year =
+                            getTimeNumber(
+                                date,
+                                Pair(format.indexOf("y"), format.lastIndexOf('y') + 1)
+                            )
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    throw java.lang.Exception("Invalid Date Format! -> ($date) does not match with format ($format)")
+                }
+            }
+
+            fun getSimpleDate(date: Date): SimpleDate {
+                return SimpleDate(
+                    date.year,
+                    date.month,
+                    date.date,
+                    date.hours,
+                    date.minutes,
+                    date.seconds
+                )
+            }
+        }
     }
 }

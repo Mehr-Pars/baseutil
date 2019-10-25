@@ -10,7 +10,7 @@ import java.util.GregorianCalendar
  * Public Methods Summary:
  * -----------------------
  * JavaSource_Calendar();
- * JavaSource_Calendar(int year, int month, int day);
+ * JavaSource_Calendar(int year, int month, int date);
  * int getIranianYear();
  * int getIranianMonth();
  * int getIranianDay();
@@ -30,9 +30,9 @@ import java.util.GregorianCalendar
  * void nextDay(int days);
  * void previousDay();
  * void previousDay(int days);
- * void setIranianDate(int year, int month, int day);
- * void setGregorianDate(int year, int month, int day);
- * void setJulianDate(int year, int month, int day);
+ * void setIranianDate(int year, int month, int date);
+ * void setGregorianDate(int year, int month, int date);
+ * void setJulianDate(int year, int month, int date);
  */
 class CalendarTool {
 
@@ -65,7 +65,7 @@ class CalendarTool {
 
     /**
      * getWeekDayStr:
-     * Returns the week day name.
+     * Returns the week date name.
      *
      * @return String
      */
@@ -78,7 +78,7 @@ class CalendarTool {
 
     /**
      * getDayOfWeek:
-     * Returns the week day number. Monday=0..Sunday=6;
+     * Returns the week date number. Monday=0..Sunday=6;
      *
      * @return int
      */
@@ -104,7 +104,7 @@ class CalendarTool {
         private set // Month part of a Iranian expireDate
     /**
      * getIranianDay:
-     * Returns the 'day' part of the Iranian expireDate.
+     * Returns the 'date' part of the Iranian expireDate.
      *
      * @return int
      */
@@ -128,7 +128,7 @@ class CalendarTool {
         private set // Month part of a Gregorian expireDate
     /**
      * getGregorianDay:
-     * Returns the 'day' part of the Gregorian expireDate.
+     * Returns the 'date' part of the Gregorian expireDate.
      *
      * @return int
      */
@@ -152,7 +152,7 @@ class CalendarTool {
         private set // Month part of a Julian expireDate
     /**
      * getJulianDay()
-     * Returns the 'day' part of the Julian expireDate.
+     * Returns the 'date' part of the Julian expireDate.
      *
      * @return int
      */
@@ -160,7 +160,7 @@ class CalendarTool {
         private set // Day part of a Julian expireDate
     private var leap: Int = 0 // Number of years since the last leap year (0 to 4)
     private var JDN: Int = 0 // Julian Day Number
-    private var march: Int = 0 // The march day of Farvardin the first (First day of jaYear)
+    private var march: Int = 0 // The march date of Farvardin the first (First date of jaYear)
 
     /**
      * JavaSource_Calendar:
@@ -204,7 +204,7 @@ class CalendarTool {
 
     /**
      * nextDay:
-     * Go to next julian day number (JDN) and adjusts the other dates.
+     * Go to next julian date number (JDN) and adjusts the other dates.
      */
     fun nextDay() {
         JDN++
@@ -229,7 +229,7 @@ class CalendarTool {
 
     /**
      * previousDay:
-     * Go to previous julian day number (JDN) and adjusts the otehr dates.
+     * Go to previous julian date number (JDN) and adjusts the otehr dates.
      */
     fun previousDay() {
         JDN--
@@ -308,14 +308,14 @@ class CalendarTool {
 
     /**
      * IranianCalendar:
-     * This method determines if the Iranian (Jalali) year is leap (366-day long)
-     * or is the common year (365 days), and finds the day in March (Gregorian
-     * Calendar)of the first day of the Iranian year ('irYear').Iranian year (irYear)
+     * This method determines if the Iranian (Jalali) year is leap (366-date long)
+     * or is the common year (365 days), and finds the date in March (Gregorian
+     * Calendar)of the first date of the Iranian year ('irYear').Iranian year (irYear)
      * ranges from (-61 to 3177).This method will set the following private data
      * members as follows:
      * leap: Number of years since the last leap year (0 to 4)
      * Gy: Gregorian year of the begining of Iranian year
-     * march: The March day of Farvardin the 1st (first day of jaYear)
+     * march: The March date of Farvardin the 1st (first date of jaYear)
      */
     private fun IranianCalendar() {
         // Iranian years starting the 33-year rule
@@ -382,14 +382,14 @@ class CalendarTool {
 
     /**
      * IsLeap:
-     * This method determines if the Iranian (Jalali) year is leap (366-day long)
-     * or is the common year (365 days), and finds the day in March (Gregorian
-     * Calendar)of the first day of the Iranian year ('irYear').Iranian year (irYear)
+     * This method determines if the Iranian (Jalali) year is leap (366-date long)
+     * or is the common year (365 days), and finds the date in March (Gregorian
+     * Calendar)of the first date of the Iranian year ('irYear').Iranian year (irYear)
      * ranges from (-61 to 3177).This method will set the following private data
      * members as follows:
      * leap: Number of years since the last leap year (0 to 4)
      * Gy: Gregorian year of the begining of Iranian year
-     * march: The March day of Farvardin the 1st (first day of jaYear)
+     * march: The March date of Farvardin the 1st (first date of jaYear)
      */
     fun IsLeap(irYear1: Int): Boolean {
         // Iranian years starting the 33-year rule
@@ -511,7 +511,7 @@ class CalendarTool {
 
     /**
      * julianDateToJDN:
-     * Calculates the julian day number (JDN) from Julian calendar dates. This
+     * Calculates the julian date number (JDN) from Julian calendar dates. This
      * integer number corresponds to the noon of the expireDate (i.e. 12 hours of
      * Universal Time). This method was tested to be good (valid) since 1 March,
      * -100100 (of both calendars) up to a few millions (10^6) years into the
@@ -529,7 +529,7 @@ class CalendarTool {
 
     /**
      * JDNToJulian:
-     * Calculates Julian calendar dates from the julian day number (JDN) for the
+     * Calculates Julian calendar dates from the julian date number (JDN) for the
      * period since JDN=-34839655 (i.e. the year -100100 of both calendars) to
      * some millions (10^6) years ahead of the present. The algorithm is based on
      * D.A. Hatcher, Q.Jl.R.Astron.Soc. 25(1984), 53-55 slightly modified by K.M.
@@ -545,7 +545,7 @@ class CalendarTool {
 
     /**
      * gergorianDateToJDN:
-     * Calculates the julian day number (JDN) from Gregorian calendar dates. This
+     * Calculates the julian date number (JDN) from Gregorian calendar dates. This
      * integer number corresponds to the noon of the expireDate (i.e. 12 hours of
      * Universal Time). This method was tested to be good (valid) since 1 March,
      * -100100 (of both calendars) up to a few millions (10^6) years into the
@@ -565,7 +565,7 @@ class CalendarTool {
 
     /**
      * JDNToGregorian:
-     * Calculates Gregorian calendar dates from the julian day number (JDN) for
+     * Calculates Gregorian calendar dates from the julian date number (JDN) for
      * the period since JDN=-34839655 (i.e. the year -100100 of both calendars) to
      * some millions (10^6) years ahead of the present. The algorithm is based on
      * D.A. Hatcher, Q.Jl.R.Astron.Soc. 25(1984), 53-55 slightly modified by K.M.
