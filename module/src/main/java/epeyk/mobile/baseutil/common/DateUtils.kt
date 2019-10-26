@@ -89,15 +89,6 @@ object DateUtils {
         else String.format("%02d:%02d", minute, second)
     }
 
-    @Throws(NumberFormatException::class)
-    private fun getTimeNumber(s: String, index: Pair<Int, Int>): Int {
-        val number = if (index.first >= 0 && index.second <= s.length)
-            s.substring(index.first, index.second)
-        else
-            "0"
-        return number.toInt()
-    }
-
     class SimpleDate(
         var year: Int = 0,
         var month: Int = 0,
@@ -130,44 +121,39 @@ object DateUtils {
             return getStringDate()
         }
 
+        private fun getTimeNumber(s: String): String {
+            var number = ""
+            var i = 0
+            while (i in s.indices && s[i].isDigit()) number += s[i++]
+
+            return number
+        }
+
+        fun parse(date: String, format: String) {
+            if (date.isEmpty() || format.isEmpty()) return
+            val f = format.first()
+            val number = getTimeNumber(date)
+            when (f) {
+                'y' -> year = if (number.isEmpty()) 0 else number.toInt()
+                'M' -> month = if (number.isEmpty()) 0 else number.toInt()
+                'd' -> this.date = if (number.isEmpty()) 0 else number.toInt()
+                'H' -> hours = if (number.isEmpty()) 0 else number.toInt()
+                'm' -> minutes = if (number.isEmpty()) 0 else number.toInt()
+                's' -> seconds = if (number.isEmpty()) 0 else number.toInt()
+                else -> {
+                    parse(date.removeRange(0, 1), format.removeRange(0, 1))
+                    return
+                }
+            }
+
+            parse(date.replace(number, ""), format.replace(f.toString(), ""))
+        }
+
         companion object {
+
             fun getSimpleDate(date: String, format: String = dateFormat): SimpleDate {
-                return try {
-                    SimpleDate().apply {
-                        seconds =
-                            getTimeNumber(
-                                date,
-                                Pair(format.indexOf("s"), format.lastIndexOf('s') + 1)
-                            )
-                        minutes =
-                            getTimeNumber(
-                                date,
-                                Pair(format.indexOf("m"), format.lastIndexOf('m') + 1)
-                            )
-                        hours =
-                            getTimeNumber(
-                                date,
-                                Pair(format.indexOf("H"), format.lastIndexOf('H') + 1)
-                            )
-                        this.date =
-                            getTimeNumber(
-                                date,
-                                Pair(format.indexOf("d"), format.lastIndexOf('d') + 1)
-                            )
-                        month =
-                            getTimeNumber(
-                                date,
-                                Pair(format.indexOf("M"), format.lastIndexOf('M') + 1)
-                            )
-                        year =
-                            getTimeNumber(
-                                date,
-                                Pair(format.indexOf("y"), format.lastIndexOf('y') + 1)
-                            )
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    throw java.lang.Exception("Invalid Date Format! -> ($date) does not match with format ($format)")
+                return SimpleDate().apply {
+                    parse(date, format)
                 }
             }
 
