@@ -40,7 +40,7 @@ open class TextViewCustom : AppCompatTextView {
 
     private fun setCustomFont(ctx: Context, attrs: AttributeSet) {
         val a = ctx.obtainStyledAttributes(attrs, R.styleable.TextViewCustom)
-        val customFont = a.getResourceId(R.styleable.TextViewCustom_customFont, R.font.iransans)
+        val customFont = a.getResourceId(R.styleable.TextViewCustom_customFont, R.font.iransans_farsi_numbers)
         setCustomFont(ctx, customFont)
         a.recycle()
     }

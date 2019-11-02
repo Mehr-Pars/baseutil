@@ -1,8 +1,6 @@
 package epeyk.mobile.baseutil.common
 
-import android.content.Context
-import epeyk.mobile.baseutil.R
-import java.util.HashMap
+import java.util.*
 import java.util.regex.Pattern
 
 object TextUtils {
