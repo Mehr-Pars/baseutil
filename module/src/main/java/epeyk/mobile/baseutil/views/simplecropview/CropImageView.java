@@ -16,6 +16,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
@@ -27,7 +28,6 @@ import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
-import android.widget.ImageView;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
@@ -1341,7 +1341,14 @@ public class CropImageView extends AppCompatImageView {
             outputStream = getContext().getContentResolver()
                     .openOutputStream(uri);
             if (outputStream != null) {
-                bitmap.compress(mCompressFormat, mCompressQuality, outputStream);
+                new AsyncTask<OutputStream, Void, Bitmap>() {
+
+                    @Override
+                    protected Bitmap doInBackground(OutputStream... streams) {
+                        bitmap.compress(mCompressFormat, mCompressQuality, streams[0]);
+                        return null;
+                    }
+                }.execute();
             }
         } catch (IOException e) {
             Logger.e("An error occurred while saving the image: " + uri, e);
@@ -1350,11 +1357,9 @@ public class CropImageView extends AppCompatImageView {
             Utils.closeQuietly(outputStream);
         }
 
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (mSaveCallback != null) mSaveCallback.onSuccess(uri);
-            }
+
+        mHandler.post(() -> {
+            if (mSaveCallback != null) mSaveCallback.onSuccess(uri);
         });
     }
 

@@ -1,4 +1,4 @@
-package epeyk.mobile.module.basemoduleholder
+package epeyk.mobile.baseutil
 
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4

@@ -1,8 +1,7 @@
 package epeyk.mobile.sample
 
-import org.junit.Test
-
 import org.junit.Assert.*
+import org.junit.Test
 
 /**
  * Example Local unit test, which will execute on the development machine (host).

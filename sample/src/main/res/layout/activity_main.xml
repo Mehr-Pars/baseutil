@@ -26,4 +26,23 @@
         app:civ_radius="35.0"
         app:srcCompat="@mipmap/ic_launcher" />
 
+    <epeyk.mobile.baseutil.views.TextViewCustom
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_high"
+        android:clickable="false"
+        android:hint="شماره تلفن"
+        android:padding="@dimen/margin_high"
+        android:text="02155886699"
+        app:showHintAsTooltip="true" />
+
+    <epeyk.mobile.baseutil.views.EditTextCustom
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_high"
+        android:clickable="false"
+        android:hint="شماره همراه"
+        android:padding="@dimen/margin_high"
+        android:text="02155886699"
+        app:showHintAsTooltip="true" />
 </LinearLayout>

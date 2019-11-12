@@ -1,8 +1,7 @@
-package epeyk.mobile.module.basemoduleholder
-
-import org.junit.Test
+package epeyk.mobile.baseutil
 
 import org.junit.Assert.*
+import org.junit.Test
 
 /**
  * Example Local unit test, which will execute on the development machine (host).

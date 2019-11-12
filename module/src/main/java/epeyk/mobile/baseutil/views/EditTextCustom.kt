@@ -8,8 +8,10 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
+import epeyk.mobile.baseutil.EnumToastType
 import epeyk.mobile.baseutil.R
 import epeyk.mobile.baseutil.common.FontManager
+import epeyk.mobile.baseutil.makeToast
 
 
 open class EditTextCustom : AppCompatEditText {
@@ -32,6 +34,7 @@ open class EditTextCustom : AppCompatEditText {
         changeCursor()
         setCustomFont(context, attrs)
         setDefaultGravity(context, attrs)
+        setTooltip(context, attrs)
         addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
 
@@ -114,9 +117,20 @@ open class EditTextCustom : AppCompatEditText {
         //        if (gravity != Gravity.CENTER && gravity != Gravity.CENTER_HORIZONTAL && gravity != Gravity.CENTER_VERTICAL && gravity != Gravity.LEFT) {
         //            setGravity(Gravity.RIGHT);
         //        }
+        a.recycle()
     }
 
-    companion object {
-        private val TAG = "EditText"
+    fun setTooltip(ctx: Context, attrs: AttributeSet) {
+        val a = ctx.obtainStyledAttributes(attrs, R.styleable.TextViewCustom)
+        val showHintAsTooltip = a.getBoolean(R.styleable.TextViewCustom_showHintAsTooltip, false)
+        if (showHintAsTooltip) {
+            isLongClickable = true
+            setOnLongClickListener {
+                ctx.makeToast(hint.toString(), EnumToastType.TOAST_TYPE_NORMAL)
+                return@setOnLongClickListener true
+            }
+        }
+        a.recycle()
     }
+
 }
