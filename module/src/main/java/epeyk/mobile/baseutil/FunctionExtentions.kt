@@ -233,6 +233,14 @@ fun JsonObject.optInt(key: String, defaultValue: Int = 0): Int {
     return defaultValue
 }
 
+fun JsonObject.optLong(key: String, defaultValue: Long = 0L): Long {
+    val element = get(key)
+    if (element != null && element !== JsonNull.INSTANCE)
+        return element.asLong
+
+    return defaultValue
+}
+
 fun JsonObject.optBoolean(key: String, defaultValue: Boolean = false): Boolean {
     val element = get(key)
     if (element != null && element !== JsonNull.INSTANCE)
