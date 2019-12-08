@@ -283,22 +283,53 @@ fun showStrike(textView: TextView, show: Boolean?) {
     }
 }
 
+
 // for AppCompatSpinner
-@BindingAdapter(value = ["selectedValue", "selectedValueAttrChanged"], requireAll = false)
-fun bindSpinnerData(
-    spinner: AppCompatSpinner, newSelectedValue: String?, newTextAttrChanged: InverseBindingListener
+@BindingAdapter(
+    value = ["entries", "selectedValue", "selectedValueAttrChanged"], requireAll = false
+)
+fun <T : CharSequence> setEntries(
+    spinner: AppCompatSpinner,
+    entries: Array<T>?,
+    selectedValue: String?,
+    newTextAttrChanged: InverseBindingListener?
 ) {
+    if (entries != null) {
+        val oldAdapter = spinner.adapter
+        var changed = true
+        if (oldAdapter != null && oldAdapter.count == entries.size) {
+            changed = false
+            for (i in entries.indices) {
+                if (entries[i] != oldAdapter.getItem(i)) {
+                    changed = true
+                    break
+                }
+            }
+        }
+        if (changed) {
+            val adapter = ArrayAdapter<CharSequence>(
+                spinner.context,
+                R.layout.simple_spinner_item, entries
+            )
+            adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+            spinner.adapter = adapter
+        }
+    } else {
+        spinner.adapter = null
+    }
+
     spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-            newTextAttrChanged.onChange()
+            newTextAttrChanged?.onChange()
         }
 
         override fun onNothingSelected(parent: AdapterView<*>) {}
     }
-    if (newSelectedValue != null) {
-        val pos = (spinner.adapter as ArrayAdapter<String>).getPosition(newSelectedValue)
+    if (selectedValue != null) {
+        val pos = (spinner.adapter as ArrayAdapter<String>).getPosition(selectedValue)
         spinner.setSelection(pos, true)
     }
+
 }
 
 // for AppCompatSpinner
@@ -306,4 +337,5 @@ fun bindSpinnerData(
 fun captureSelectedValue(pAppCompatSpinner: AppCompatSpinner): String {
     return pAppCompatSpinner.selectedItem as String
 }
+
 // endregion

@@ -45,6 +45,7 @@
     <dimen name="button_height_large">40.0dp</dimen>
 
 
+    <dimen name="edit_text_height_small">29.6dp</dimen>
     <dimen name="edit_text_height_medium">32dp</dimen>
     <dimen name="edit_text_height_normal">36.0dp</dimen>
     <dimen name="action_bar_height">38.4dp</dimen>

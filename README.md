@@ -13,8 +13,8 @@ allprojects {
         maven {
             url "http://maven.worthnet.ir:8081/artifactory/libs-release-local"
             credentials {
-                username = "${artifactory_username}"
-                password = "${artifactory_password}"
+                username = "${mpars_artifactory_username}"
+                password = "${mpars_artifactory_password}"
             }
         }
        
