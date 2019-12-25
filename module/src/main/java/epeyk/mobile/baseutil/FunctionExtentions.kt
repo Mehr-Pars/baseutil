@@ -3,6 +3,7 @@ package epeyk.mobile.baseutil
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.ColorMatrix
@@ -10,13 +11,14 @@ import android.graphics.ColorMatrixColorFilter
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
+import android.os.Bundle
+import android.os.Parcelable
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.annotation.ColorInt
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
@@ -27,6 +29,8 @@ import com.google.gson.JsonObject
 import com.readystatesoftware.systembartint.SystemBarTintManager
 import epeyk.mobile.baseutil.common.NumberTextWatcherForThousand
 import epeyk.mobile.baseutil.common.TextUtils
+import epeyk.mobile.baseutil.views.CustomSpinner
+import java.io.Serializable
 import java.util.regex.Pattern
 
 
@@ -257,6 +261,26 @@ fun List<String>.toJsonArray(): JsonArray {
 }
 //endregion
 
+// region Intent
+fun Intent.putExtra(name: String, value: Any) {
+    when (value) {
+        is Boolean -> putExtra(name, value)
+        is Byte -> putExtra(name, value)
+        is Char -> putExtra(name, value)
+        is Short -> putExtra(name, value)
+        is Int -> putExtra(name, value)
+        is Long -> putExtra(name, value)
+        is Float -> putExtra(name, value)
+        is Double -> putExtra(name, value)
+        is String -> putExtra(name, value)
+        is CharSequence -> putExtra(name, value)
+        is Parcelable -> putExtra(name, value)
+        is Serializable -> putExtra(name, value)
+        is Bundle -> putExtra(name, value)
+    }
+}
+//endregion
+
 // region BindingAdapter
 @BindingAdapter("price")
 fun setPrice(textView: TextView, price: Int?) {
@@ -284,12 +308,12 @@ fun showStrike(textView: TextView, show: Boolean?) {
 }
 
 
-// for AppCompatSpinner
+// for CustomSpinner
 @BindingAdapter(
     value = ["entries", "selectedValue", "selectedValueAttrChanged"], requireAll = false
 )
 fun <T : CharSequence> setEntries(
-    spinner: AppCompatSpinner,
+    spinner: CustomSpinner,
     entries: Array<T>?,
     selectedValue: String?,
     newTextAttrChanged: InverseBindingListener?
@@ -318,13 +342,12 @@ fun <T : CharSequence> setEntries(
         spinner.adapter = null
     }
 
-    spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-        override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+    spinner.addOnItemSelectedListener(object : CustomSpinner.OnItemSelectListener {
+        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             newTextAttrChanged?.onChange()
         }
+    })
 
-        override fun onNothingSelected(parent: AdapterView<*>) {}
-    }
     if (selectedValue != null) {
         val pos = (spinner.adapter as ArrayAdapter<String>).getPosition(selectedValue)
         spinner.setSelection(pos, true)
@@ -332,10 +355,10 @@ fun <T : CharSequence> setEntries(
 
 }
 
-// for AppCompatSpinner
+// for CustomSpinner
 @InverseBindingAdapter(attribute = "selectedValue", event = "selectedValueAttrChanged")
-fun captureSelectedValue(pAppCompatSpinner: AppCompatSpinner): String {
-    return pAppCompatSpinner.selectedItem as String
+fun captureSelectedValue(spinner: CustomSpinner): String {
+    return spinner.selectedItem as String
 }
 
 // endregion
