@@ -31,6 +31,7 @@ import epeyk.mobile.baseutil.common.NumberTextWatcherForThousand
 import epeyk.mobile.baseutil.common.TextUtils
 import epeyk.mobile.baseutil.views.CustomSpinner
 import java.io.Serializable
+import java.util.*
 import java.util.regex.Pattern
 
 
@@ -281,6 +282,10 @@ fun Intent.putExtra(name: String, value: Any) {
 }
 //endregion
 
+// region Other
+fun Double.round(decimals: Int = 2): Double = "%.${decimals}f".format(Locale("en"), this).toDouble()
+// endregion
+
 // region BindingAdapter
 @BindingAdapter("price")
 fun setPrice(textView: TextView, price: Int?) {
@@ -342,11 +347,15 @@ fun <T : CharSequence> setEntries(
         spinner.adapter = null
     }
 
-    spinner.addOnItemSelectedListener(object : CustomSpinner.OnItemSelectListener {
-        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            newTextAttrChanged?.onChange()
-        }
-    })
+    newTextAttrChanged?.let {
+        spinner.addOnItemSelectedListener(object : CustomSpinner.OnItemSelectListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?, view: View?, position: Int, id: Long
+            ) {
+                newTextAttrChanged.onChange()
+            }
+        })
+    }
 
     if (selectedValue != null) {
         val pos = (spinner.adapter as ArrayAdapter<String>).getPosition(selectedValue)

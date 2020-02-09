@@ -3,6 +3,9 @@ package epeyk.mobile.baseutil.common
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
+import androidx.core.content.FileProvider
+import epeyk.mobile.baseutil.showDialog
 import java.io.File
 
 object FileUtils {
@@ -41,14 +44,25 @@ object FileUtils {
 
     fun openFile(context: Context, file: File) {
         // Create URI
-        val uri = Uri.fromFile(file)
+        val uri = if (Build.VERSION.SDK_INT >= 24) {
+            FileProvider.getUriForFile(
+                context, context.applicationContext.packageName + ".provider", file
+            )
+        } else {
+            Uri.fromFile(file)
+        }
+
         val path = file.path
 
         val intent = Intent(Intent.ACTION_VIEW)
         // Check what kind of file you are trying to open, by comparing the url with extensions.
         // When the if condition is matched, plugin sets the correct intent (mime) type,
         // so Android knew what application to use to open the file
-        if (path.contains(".doc") || path.contains(".docx")) {
+        if (path.contains(".apk")) {
+            // APK file
+            intent.setDataAndType(uri, "application/vnd.android.package-archive")
+            intent.addCategory("android.intent.category.DEFAULT")
+        } else if (path.contains(".doc") || path.contains(".docx")) {
             // Word document
             intent.setDataAndType(uri, "application/msword")
         } else if (path.contains(".pdf")) {
@@ -61,8 +75,8 @@ object FileUtils {
             // Excel file
             intent.setDataAndType(uri, "application/vnd.ms-excel")
         } else if (path.contains(".zip") || path.contains(".rar")) {
-            // WAV audio file
-            intent.setDataAndType(uri, "application/x-wav")
+            // Zip file
+            intent.setDataAndType(uri, "application/zip")
         } else if (path.contains(".rtf")) {
             // RTF file
             intent.setDataAndType(uri, "application/rtf")
@@ -78,7 +92,9 @@ object FileUtils {
         } else if (path.contains(".txt")) {
             // Text file
             intent.setDataAndType(uri, "text/plain")
-        } else if (path.contains(".3gp") || path.contains(".mpg") || path.contains(".mpeg") || path.contains(".mpe") || path.contains(
+        } else if (path.contains(".3gp") || path.contains(".mpg") || path.contains(".mpeg") || path.contains(
+                ".mpe"
+            ) || path.contains(
                 ".mp4"
             ) || path.contains(".avi")
         ) {
@@ -94,6 +110,13 @@ object FileUtils {
         }
 
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        context.startActivity(intent)
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+        try {
+            context.startActivity(intent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            context.showDialog("امکان باز کردن این فایل وجود ندارد برای مشاهده فایل به آدرس $path مراجعه کنید")
+        }
     }
 }
