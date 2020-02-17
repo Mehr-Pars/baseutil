@@ -12,21 +12,21 @@
         android:layout_height="wrap_content"
         android:text="show dialog" />
 
-    <epeyk.mobile.baseutil.views.CircleImageView
+    <mehrpars.mobile.baseutil.views.CircleImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="@dimen/margin_high"
         android:background="#e1e1e1"
         app:srcCompat="@mipmap/ic_launcher" />
 
-    <epeyk.mobile.baseutil.views.RoundedImageView
+    <mehrpars.mobile.baseutil.views.RoundedImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:background="#e1e1e1"
         app:civ_radius="35.0"
         app:srcCompat="@mipmap/ic_launcher" />
 
-    <epeyk.mobile.baseutil.views.TextViewCustom
+    <mehrpars.mobile.baseutil.views.TextViewCustom
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_high"
@@ -36,7 +36,7 @@
         android:text="02155886699"
         app:showHintAsTooltip="true" />
 
-    <epeyk.mobile.baseutil.views.EditTextCustom
+    <mehrpars.mobile.baseutil.views.EditTextCustom
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_high"

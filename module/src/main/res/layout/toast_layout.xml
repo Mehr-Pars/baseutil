@@ -6,7 +6,7 @@
     android:layout_height="fill_parent"
     android:gravity="center">
 
-    <epeyk.mobile.baseutil.views.TextViewCustom
+    <mehrpars.mobile.baseutil.views.TextViewCustom
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

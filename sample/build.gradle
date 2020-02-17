@@ -6,16 +6,16 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     signingConfigs {
-        config {
-            keyAlias 'epeyk mobile'
-            keyPassword 'epeyk2014'
-            storeFile file('C:/key.android')
-            storePassword 'epeyk2014'
+        release {
+            storeFile file('C:\\mehrpars.jks')
+            storePassword 'mehrpars2019'
+            keyAlias = 'Mehr Pars'
+            keyPassword 'mehrpars2019'
         }
     }
     compileSdkVersion 29
     defaultConfig {
-        applicationId "epeyk.mobile.baseutilsample"
+        applicationId "mehrpars.mobile.baseutilsample"
         minSdkVersion 14
         targetSdkVersion 29
         versionCode 1
@@ -23,13 +23,13 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
-        signingConfig signingConfigs.config
+        signingConfig signingConfigs.release
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
@@ -40,7 +40,7 @@ android {
 
 dependencies {
     implementation project(':module')
-//    implementation 'epeyk.mobile.lib:baseutil:1.0.0-beta2'
+//    implementation 'mehrpars.mobile.lib:baseutil:1.0.0'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

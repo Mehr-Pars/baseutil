@@ -32,7 +32,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.918" />
 
-    <epeyk.mobile.baseutil.views.RoundedImageView
+    <mehrpars.mobile.baseutil.views.RoundedImageView
         android:id="@+id/background"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -45,7 +45,7 @@
         app:layout_constraintRight_toLeftOf="@id/right"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <epeyk.mobile.baseutil.views.TextViewCustom
+    <mehrpars.mobile.baseutil.views.TextViewCustom
         android:id="@+id/text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="آیا میخواهید از برنامه خارج شوید؟" />
 
-    <epeyk.mobile.baseutil.views.TextViewCustom
+    <mehrpars.mobile.baseutil.views.TextViewCustom
         android:id="@+id/confirm"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/button_height_low"
@@ -82,7 +82,7 @@
         app:layout_constraintLeft_toLeftOf="@id/left"
         app:layout_constraintRight_toLeftOf="@id/cancel" />
 
-    <epeyk.mobile.baseutil.views.TextViewCustom
+    <mehrpars.mobile.baseutil.views.TextViewCustom
         android:id="@+id/cancel"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/button_height_low"
