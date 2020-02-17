@@ -64,6 +64,11 @@ fun View.showKeyBoard() {
     }
 }
 
+fun View.getCenter(): Pair<Int, Int> {
+    val cx = (this.x + this.width / 2).toInt()
+    val cy = (this.y + this.height / 2).toInt()
+    return Pair(cx, cy)
+}
 
 fun ViewGroup.inflate(@LayoutRes resId: Int): View =
     LayoutInflater.from(this.context).inflate(resId, this, false)

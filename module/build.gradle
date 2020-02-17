@@ -8,8 +8,8 @@ apply plugin: 'com.jfrog.artifactory'
 apply plugin: 'maven-publish'
 apply plugin: 'maven'
 
-def libraryGroupId = 'epeyk.mobile.lib'
-def libraryArtifactId = 'baseutil'
+def libraryGroupId = project.libraryGroup
+def libraryArtifactId = project.libraryName
 def libraryVersion = project.versionName
 //upload new version command
 //gradlew.bat assembleRelease artifactoryPublish
