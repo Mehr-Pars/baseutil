@@ -2,7 +2,7 @@
 
 Add to _build.gradle_ (app):
 ```groovy
-implementation 'mehrpars.mobile.lib:baseutil:1.0.0'
+implementation 'epeyk.mobile.lib:baseutil:1.0.0'
 ```
 
 Add to _build.gradle_ (Project):
@@ -11,10 +11,10 @@ allprojects {
     repositories {
         
         maven {
-            url "http://maven2.mpars.ir/artifactory/libs-release-local"
+            url "http://maven.worthnet.ir:8081/artifactory/libs-release-local"
             credentials {
-                username = "${mpars_artifactory_username}"
-                password = "${mpars_artifactory_password}"
+                username = "${artifactory_username}"
+                password = "${artifactory_password}"
             }
         }
        
@@ -23,7 +23,7 @@ allprojects {
 ```
  
 ## License  
-[Mehr Pars ICT][mp]
+[Arzesh Network][link]
 
 
-[mp]: https://www.mehrparsict.com
+[link]: http://worthnet.ir

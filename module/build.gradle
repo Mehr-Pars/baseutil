@@ -113,13 +113,13 @@ publishing {
 }
 
 artifactory {
-    contextUrl = 'http://maven2.mpars.ir/artifactory'
+    contextUrl = 'http://maven.worthnet.ir:8081/artifactory'
     publish {
         repository {
             repoKey = 'libs-release-local'
 
-            username = mpars_artifactory_username
-            password = mpars_artifactory_password
+            username = artifactory_username
+            password = artifactory_password
         }
         defaults {
             publications('aar')

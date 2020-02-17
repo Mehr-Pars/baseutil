@@ -11,10 +11,10 @@ allprojects {
     repositories {
         
         maven {
-            url "http://maven2.mpars.ir/artifactory/libs-release-local"
+            url "http://maven.worthnet.ir:8081/artifactory/libs-release-local"
             credentials {
-                username = "${mpars_artifactory_username}"
-                password = "${mpars_artifactory_password}"
+                username = "${artifactory_username}"
+                password = "${artifactory_password}"
             }
         }
        
@@ -23,7 +23,7 @@ allprojects {
 ```
  
 ## License  
-[Mehr Pars ICT][mp]
+[Arzesh Network][link]
 
 
-[mp]: https://www.mehrparsict.com
+[link]: http://worthnet.ir
