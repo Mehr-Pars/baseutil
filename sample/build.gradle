@@ -15,9 +15,9 @@ android {
     }
     compileSdkVersion 29
     defaultConfig {
-        applicationId "mehrpars.mobile.baseutilsample"
-        minSdkVersion 14
-        targetSdkVersion 29
+        applicationId project.sampleApplicationId
+        minSdkVersion project.minSdkVersion.toInteger()
+        targetSdkVersion project.targetSdkVersion.toInteger()
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -39,8 +39,9 @@ android {
 }
 
 dependencies {
+    // load library from repository
+//    implementation project.libraryGroup + ':' + project.libraryName + ':' + project.versionName
     implementation project(':module')
-//    implementation 'mehrpars.mobile.lib:baseutil:$project.versionName'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

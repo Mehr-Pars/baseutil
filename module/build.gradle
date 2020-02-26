@@ -11,8 +11,6 @@ apply plugin: 'maven'
 def libraryGroupId = project.libraryGroup
 def libraryArtifactId = project.libraryName
 def libraryVersion = project.versionName
-//upload new version command
-//gradlew.bat assembleRelease artifactoryPublish
 
 android {
     signingConfigs {
@@ -72,14 +70,6 @@ dependencies {
 
 publishing {
     publications {
-//        aar(MavenPublication) {
-//            groupId libraryGroupId
-//            version libraryVersion
-//            artifactId libraryArtifactId
-//
-////            artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
-//            artifact("$buildDir/outputs/aar/module-release.aar")
-//        }
 
         aar(MavenPublication) {
             groupId libraryGroupId
@@ -130,3 +120,41 @@ artifactory {
         }
     }
 }
+
+task generateSources {
+    doFirst {
+        def script = "kotlinc.bat _generator_helper.kt -include-runtime -d _generator.jar".execute()
+        script.in.eachLine { line -> println line }
+        script.err.eachLine { line -> println "ERROR: " + line }
+        script.waitFor()
+    }
+    doLast {
+        def script = "java -jar _generator.jar".execute()
+        script.in.eachLine { line -> println line }
+        script.err.eachLine { line -> println "ERROR: " + line }
+        script.waitFor()
+
+        "rm _generator.jar".execute()
+    }
+}
+
+task assembleModule {
+    doFirst {
+        def script = "gradlew.bat assemble".execute()
+        script.in.eachLine { line -> println line }
+        script.err.eachLine { line -> println "ERROR: " + line }
+        script.waitFor()
+    }
+}
+
+task publishModule {
+    doFirst {
+        def script = "gradlew.bat artifactoryPublish".execute()
+        script.in.eachLine { line -> println line }
+        script.err.eachLine { line -> println "ERROR: " + line }
+        script.waitFor()
+    }
+}
+
+assembleModule.dependsOn generateSources
+publishModule.dependsOn assembleModule

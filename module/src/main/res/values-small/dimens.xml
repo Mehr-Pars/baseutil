@@ -14,6 +14,7 @@
     <dimen name="text_size_small">8.0sp</dimen>
     <dimen name="text_size_very_mini">9.6sp</dimen>
     <dimen name="text_size_mini">10.4sp</dimen>
+    <dimen name="text_size_tiny">12.4sp</dimen>
     <dimen name="text_size_medium">14.4sp</dimen>
     <dimen name="text_size_large">16.0sp</dimen>
     <dimen name="text_size_huge">18.4sp</dimen>
@@ -44,12 +45,11 @@
     <dimen name="button_height_normal">36.0dp</dimen>
     <dimen name="button_height_large">40.0dp</dimen>
 
-
     <dimen name="edit_text_height_small">29.6dp</dimen>
-    <dimen name="edit_text_height_medium">32dp</dimen>
+    <dimen name="edit_text_height_medium">32.0dp</dimen>
     <dimen name="edit_text_height_normal">36.0dp</dimen>
     <dimen name="action_bar_height">38.4dp</dimen>
-    <dimen name="divider_width">0.7dp</dimen>
-    <dimen name="dialog_width">240dp</dimen>
-    <dimen name="dialog_min_height">128dp</dimen>
+    <dimen name="divider_width">0.6dp</dimen>
+    <dimen name="dialog_width">240.0dp</dimen>
+    <dimen name="dialog_min_height">128.0dp</dimen>
 </resources>
