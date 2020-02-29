@@ -70,10 +70,9 @@ fun generateDimens(multiply: Float, filePath: String) {
                     val dimen = line.substring(start, end)
 
                     val number = extractNumbers(dimen)
-                    val unit = dimen.replace(number, "")
 
                     val finalValue = "%.1f".format((number.toDouble()) * multiply)
-                    val finalDimen = finalValue + unit
+                    val finalDimen = dimen.replace(number, finalValue)
 
                     out.println(line.replace(dimen, finalDimen))
                 } else {
