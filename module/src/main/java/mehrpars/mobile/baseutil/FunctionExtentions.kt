@@ -109,7 +109,14 @@ fun ImageView.grayScale() {
 //endregion
 
 // region Context
-fun AppCompatActivity.initStatusBar(colorResource: Int) {
+@Deprecated("use setStatusBarColor and setNavigationBarColor instead")
+fun AppCompatActivity.initStatusBar(colorResource: Int, changeNavigationColor: Boolean = true) {
+    setStatusBarColor(colorResource)
+    if (changeNavigationColor)
+        setNavigationBarColor(colorResource)
+}
+
+fun AppCompatActivity.setStatusBarColor(colorResource: Int) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         val tintManager = SystemBarTintManager(this)
@@ -120,6 +127,11 @@ fun AppCompatActivity.initStatusBar(colorResource: Int) {
         window.decorView.systemUiVisibility =
             View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         window.statusBarColor = resources.getColor(colorResource)
+    }
+}
+
+fun AppCompatActivity.setNavigationBarColor(colorResource: Int) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
         window.navigationBarColor = resources.getColor(colorResource)
     }
 }

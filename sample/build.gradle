@@ -5,15 +5,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    signingConfigs {
-        release {
-            storeFile file('C:\\mehrpars.jks')
-            storePassword 'mehrpars2019'
-            keyAlias = 'Mehr Pars'
-            keyPassword 'mehrpars2019'
-        }
-    }
-    compileSdkVersion 29
+    compileSdkVersion project.compileSdkVersion.toInteger()
     defaultConfig {
         applicationId project.sampleApplicationId
         minSdkVersion project.minSdkVersion.toInteger()
@@ -23,13 +15,11 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
-        signingConfig signingConfigs.release
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
         }
     }
     compileOptions {
