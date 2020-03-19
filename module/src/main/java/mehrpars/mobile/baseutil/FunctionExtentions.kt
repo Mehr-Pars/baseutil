@@ -332,13 +332,16 @@ fun showStrike(textView: TextView, show: Boolean?) {
 
 // for CustomSpinner
 @BindingAdapter(
-    value = ["entries", "selectedValue", "selectedValueAttrChanged"], requireAll = false
+    value = ["entries", "selectedValue", "selectedValueAttrChanged",
+        "spinnerItemResource", "dropDownResource"], requireAll = false
 )
 fun <T : CharSequence> setEntries(
     spinner: CustomSpinner,
     entries: Array<T>?,
     selectedValue: String?,
-    newTextAttrChanged: InverseBindingListener?
+    newTextAttrChanged: InverseBindingListener?,
+    spinnerItemResource: Int?,
+    dropDownResource: Int?
 ) {
     if (entries != null) {
         val oldAdapter = spinner.adapter
@@ -355,9 +358,11 @@ fun <T : CharSequence> setEntries(
         if (changed) {
             val adapter = ArrayAdapter<CharSequence>(
                 spinner.context,
-                R.layout.simple_spinner_item, entries
+                spinnerItemResource ?: R.layout.simple_spinner_item, entries
             )
-            adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+            adapter.setDropDownViewResource(
+                dropDownResource ?: R.layout.simple_spinner_dropdown_item
+            )
             spinner.adapter = adapter
         }
     } else {
