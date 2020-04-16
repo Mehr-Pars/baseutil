@@ -32,19 +32,26 @@ object DateUtils {
         return 0
     }
 
-    fun getPersianDate(timeMillis: Long, outputFormat: String = dateFormat): String? {
+    fun getPersianDate(
+        timeMillis: Long, outputFormat: String = dateFormat,
+        monthNames: List<String>? = null
+    ): String? {
         val date = Date(timeMillis)
-        return getPersianDate(date, outputFormat)
+        return getPersianDate(date, outputFormat, monthNames)
     }
 
     fun getPersianDate(
-        stringDate: String, inputFormat: String = dateFormat, outputFormat: String = dateFormat
+        stringDate: String, inputFormat: String = dateFormat,
+        outputFormat: String = dateFormat,
+        monthNames: List<String>? = null
     ): String? {
         val simpleDate = SimpleDate.getSimpleDate(stringDate, inputFormat)
-        return getPersianDate(simpleDate.getDate(), outputFormat)
+        return getPersianDate(simpleDate.getDate(), outputFormat, monthNames)
     }
 
-    fun getPersianDate(date: Date, outputFormat: String = dateFormat): String? {
+    fun getPersianDate(
+        date: Date, outputFormat: String = dateFormat, monthNames: List<String>? = null
+    ): String? {
         try {
             val simpleDate = SimpleDate.getSimpleDate(date)
             val solarCalendar = ShamsiCalendar().SolarCalendar(date)
@@ -52,7 +59,7 @@ object DateUtils {
             simpleDate.year = solarCalendar.year
             simpleDate.month = solarCalendar.month
             simpleDate.date = solarCalendar.date
-            return simpleDate.getStringDate(outputFormat)
+            return simpleDate.getStringDate(outputFormat, monthNames)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -97,9 +104,12 @@ object DateUtils {
         var minutes: Int = 0,
         var seconds: Int = 0
     ) {
-        fun getStringDate(format: String = dateFormat): String {
+        fun getStringDate(format: String = dateFormat, monthNames: List<String>? = null): String {
+            val monthName = if (monthNames?.size == 12) monthNames[month - 1]
+            else "%02d".format(month)
+
             return format.replace("yyyy", "$year")
-                .replace("MM", "%02d".format(month))
+                .replace("MM", monthName)
                 .replace("dd", "%02d".format(date))
                 .replace("HH", "%02d".format(hours))
                 .replace("mm", "%02d".format(minutes))
@@ -169,4 +179,5 @@ object DateUtils {
             }
         }
     }
+
 }

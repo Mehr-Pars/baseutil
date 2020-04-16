@@ -57,8 +57,8 @@ open class EditTextCustom : AppCompatEditText {
             val f = TextView::class.java.getDeclaredField("mCursorDrawableRes")
             f.isAccessible = true
             f.set(this, 0)
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } catch (ignore: Exception) {
+//            e.printStackTrace()
         }
 
     }
