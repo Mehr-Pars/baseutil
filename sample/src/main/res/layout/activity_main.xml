@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -19,15 +19,25 @@
         android:layout_marginTop="@dimen/margin_high"
         android:background="#e1e1e1"
         app:civ_border_width="2dp"
-        tools:src="@tools:sample/avatars"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@mipmap/ic_launcher"
+        tools:src="@tools:sample/avatars" />
 
     <mehrpars.mobile.baseutil.views.RoundedImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:background="#e1e1e1"
-        app:civ_radius="35.0"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:civ_radius="18.0"
+        app:srcCompat="@mipmap/ic_launcher"
+        tools:src="@tools:sample/avatars" />
+
+    <vgame.ir.view.component.round.RoundFrameLayout
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:rv_backgroundColor="@color/colorRed"
+        app:rv_cornerRadius="8dp"
+        app:rv_cornerRadius_BR="32dp"
+        app:srcCompat="@mipmap/ic_launcher"
+        tools:src="@tools:sample/avatars" />
 
     <mehrpars.mobile.baseutil.views.TextViewCustom
         android:layout_width="wrap_content"
