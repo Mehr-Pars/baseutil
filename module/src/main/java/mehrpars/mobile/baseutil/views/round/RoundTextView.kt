@@ -1,23 +1,51 @@
 package vgame.ir.view.component.round
 
 import android.content.Context
+import android.graphics.Typeface
+import androidx.appcompat.widget.AppCompatTextView
 import android.util.AttributeSet
 import android.view.View
-import mehrpars.mobile.baseutil.views.TextViewCustom
+import mehrpars.mobile.baseutil.R
+import mehrpars.mobile.baseutil.common.FontManager
 
-class RoundTextView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
-    TextViewCustom(context) {
+class RoundTextView : AppCompatTextView {
     /** use delegate to set attr  */
-    val delegate: RoundViewDelegate
+    lateinit var delegate: RoundViewDelegate
 
-    constructor(context: Context) : this(context, null) {
+    constructor(context: Context) : super(context) {
     }
 
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0) {
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+        initialize(context, attrs)
     }
 
-    init {
-        delegate = RoundViewDelegate(this, context, attrs!!)
+    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
+        context,
+        attrs,
+        defStyle
+    ) {
+        initialize(context, attrs)
+    }
+
+    private fun initialize(context: Context, attrs: AttributeSet) {
+        delegate = RoundViewDelegate(this, context, attrs)
+        setCustomFont(context, attrs)
+    }
+
+    private fun setCustomFont(ctx: Context, attrs: AttributeSet) {
+        val a = ctx.obtainStyledAttributes(attrs, R.styleable.TextViewCustom)
+        val customFont =
+            a.getResourceId(R.styleable.TextViewCustom_customFont, R.font.iransans_farsi_numbers)
+        setCustomFont(ctx, customFont)
+        a.recycle()
+    }
+
+    fun setCustomFont(ctx: Context, resource: Int?): Boolean {
+        resource?.let {
+            typeface = FontManager.getFont(ctx, resource)
+            return true
+        }
+        return false
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
