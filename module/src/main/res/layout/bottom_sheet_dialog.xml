@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="title"
+            type="String" />
+
+        <variable
+            name="confirm"
+            type="String" />
+
+        <variable
+            name="cancel"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_bottom_sheet"
+        android:minHeight="@dimen/bottom_sheet_min_height">
+
+        <View
+            android:id="@+id/anchor"
+            android:layout_width="@dimen/bottom_sheet_anchor_width"
+            android:layout_height="@dimen/bottom_sheet_anchor_height"
+            android:layout_marginTop="@dimen/margin_high"
+            android:background="@drawable/bg_radius_primary"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <mehrpars.mobile.baseutil.views.TextViewCustom
+            android:id="@+id/text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:lineSpacingExtra="@dimen/margin_high"
+            android:paddingLeft="@dimen/margin_very_high"
+            android:paddingTop="@dimen/margin_very_high"
+            android:paddingRight="@dimen/margin_very_high"
+            android:paddingBottom="@dimen/margin_extra"
+            android:text="@{title}"
+            android:textColor="@color/colorGrayDarker"
+            android:textSize="@dimen/text_size_mini"
+            app:forceGravity="true"
+            app:layout_constraintBottom_toTopOf="@id/confirmBtn"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/anchor"
+            tools:lines="2"
+            tools:text="@string/loremipsum" />
+
+        <mehrpars.mobile.baseutil.views.TextViewCustom
+            android:id="@+id/confirmBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_low"
+            android:layout_marginHorizontal="@dimen/margin_extra"
+            android:layout_marginBottom="@dimen/margin_extra"
+            android:background="@drawable/btn_radius_primary"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:minWidth="@dimen/button_width_small"
+            android:text="@{confirm}"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_size_small"
+            app:forceGravity="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/cancelBtn"
+            app:layout_constraintTop_toBottomOf="@id/text"
+            tools:text="@string/confirm" />
+
+        <mehrpars.mobile.baseutil.views.TextViewCustom
+            android:id="@+id/cancelBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_low"
+            android:layout_marginHorizontal="@dimen/margin_extra"
+            android:layout_marginBottom="@dimen/margin_extra"
+            android:background="@drawable/btn_radius_stroke_primary"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:minWidth="@dimen/button_width_small"
+            android:text="@{cancel}"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_size_small"
+            app:forceGravity="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/confirmBtn"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text"
+            tools:text="@string/cancel" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

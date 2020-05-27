@@ -45,6 +45,12 @@
     <dimen name="button_height_normal">63.0dp</dimen>
     <dimen name="button_height_large">70.0dp</dimen>
 
+    <!-- bottom sheet sizes -->
+    <dimen name="bottom_sheet_anchor_height">4.2dp</dimen>
+    <dimen name="bottom_sheet_anchor_width">56.0dp</dimen>
+    <dimen name="bottom_sheet_min_height">238.0dp</dimen>
+    <dimen name="bottom_sheet_radius">42.0dp</dimen>
+
     <dimen name="edit_text_height_small">51.8dp</dimen>
     <dimen name="edit_text_height_medium">56.0dp</dimen>
     <dimen name="edit_text_height_normal">63.0dp</dimen>

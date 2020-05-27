@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import mehrpars.mobile.baseutil.EnumToastType
 import mehrpars.mobile.baseutil.makeToast
+import mehrpars.mobile.baseutil.showBottomSheet
 import mehrpars.mobile.baseutil.showDialog
 
 class MainActivity : AppCompatActivity() {
@@ -19,6 +20,13 @@ class MainActivity : AppCompatActivity() {
                 makeToast("Confirm Clicked", EnumToastType.TOAST_TYPE_SUCCESS)
                 it.dismiss()
             }, hideCancelBtn = false)
+        }
+
+        findViewById<View>(R.id.showBottomSheet).setOnClickListener {
+            showBottomSheet(getString(R.string.dialog_text), {
+                makeToast("Confirm Clicked", EnumToastType.TOAST_TYPE_SUCCESS)
+                it.dismiss()
+            }, showCancelBtn = true)
         }
     }
 }

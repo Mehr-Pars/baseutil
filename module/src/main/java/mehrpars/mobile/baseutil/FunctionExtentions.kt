@@ -13,6 +13,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
@@ -23,12 +24,18 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.JsonArray
 import com.google.gson.JsonNull
 import com.google.gson.JsonObject
 import com.readystatesoftware.systembartint.SystemBarTintManager
 import mehrpars.mobile.baseutil.common.NumberTextWatcherForThousand
 import mehrpars.mobile.baseutil.common.TextUtils
+import mehrpars.mobile.baseutil.views.BottomSheetDialog
+import mehrpars.mobile.baseutil.views.BottomSheetDialog.Companion.EMPTY_LAMBDA
 import mehrpars.mobile.baseutil.views.CustomSpinner
 import java.io.Serializable
 import java.util.*
@@ -201,11 +208,12 @@ enum class EnumToastType(val value: Int) {
     }
 }
 
-val EMPTY_LAMBDA: (Dialog) -> Unit = {}
+val EMPTY_LAMBDA_: (Dialog) -> Unit = {}
+@Deprecated("use showBottomSheet() function instead")
 fun Context.showDialog(
     dialogText: String,
-    confirmAction: (Dialog) -> Unit = EMPTY_LAMBDA,
-    cancelAction: (Dialog) -> Unit = EMPTY_LAMBDA,
+    confirmAction: (Dialog) -> Unit = EMPTY_LAMBDA_,
+    cancelAction: (Dialog) -> Unit = EMPTY_LAMBDA_,
     confirmBtnText: String = getString(R.string.confirm),
     cancelBtnText: String = getString(R.string.cancel),
     hideCancelBtn: Boolean = true,
@@ -224,17 +232,44 @@ fun Context.showDialog(
     cancelBtn.text = cancelBtnText
     confirmBtn.text = confirmBtnText
     cancelBtn.setOnClickListener {
-        if (cancelAction != EMPTY_LAMBDA) cancelAction(dialog)
+        if (cancelAction != EMPTY_LAMBDA_) cancelAction(dialog)
         else dialog.dismiss()
     }
     confirmBtn.setOnClickListener {
-        if (confirmAction != EMPTY_LAMBDA) confirmAction(dialog)
+        if (confirmAction != EMPTY_LAMBDA_) confirmAction(dialog)
         else dialog.dismiss()
     }
-    if (cancelAction == EMPTY_LAMBDA && hideCancelBtn)
+    if (cancelAction == EMPTY_LAMBDA_ && hideCancelBtn)
         cancelBtn.visibility = View.GONE
 
     dialog.show()
+}
+
+fun Context.showBottomSheet(
+    dialogText: String,
+    confirmAction: (BottomSheetDialogFragment) -> Unit = EMPTY_LAMBDA,
+    cancelAction: (BottomSheetDialogFragment) -> Unit = EMPTY_LAMBDA,
+    confirmBtnText: String = getString(R.string.confirm),
+    cancelBtnText: String = getString(R.string.cancel),
+    showCancelBtn: Boolean = false,
+    cancelable: Boolean = true
+) {
+    val fragmentManager: FragmentManager? = when (this) {
+        is Fragment -> this.childFragmentManager
+        is FragmentActivity -> this.supportFragmentManager
+        else -> null
+    }
+    if (fragmentManager == null) {
+        Log.e("showDialog", "----context is not type of Fragment nor FragmentActivity")
+        return
+    }
+
+    val dialog =
+        BottomSheetDialog.getInstance(dialogText, confirmBtnText, cancelBtnText, showCancelBtn)
+    dialog.confirmAction = confirmAction
+    dialog.cancelAction = cancelAction
+    dialog.isCancelable = cancelable
+    dialog.show(fragmentManager, "showDialog")
 }
 //endregion
 
