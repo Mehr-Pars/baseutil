@@ -13,7 +13,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
-import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
@@ -24,9 +23,6 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.JsonArray
 import com.google.gson.JsonNull
@@ -34,7 +30,7 @@ import com.google.gson.JsonObject
 import com.readystatesoftware.systembartint.SystemBarTintManager
 import mehrpars.mobile.baseutil.common.NumberTextWatcherForThousand
 import mehrpars.mobile.baseutil.common.TextUtils
-import mehrpars.mobile.baseutil.views.BottomSheetDialog
+import mehrpars.mobile.baseutil.views.BottomSheetBuilder
 import mehrpars.mobile.baseutil.views.BottomSheetDialog.Companion.EMPTY_LAMBDA
 import mehrpars.mobile.baseutil.views.CustomSpinner
 import java.io.Serializable
@@ -254,22 +250,14 @@ fun Context.showBottomSheet(
     showCancelBtn: Boolean = false,
     cancelable: Boolean = true
 ) {
-    val fragmentManager: FragmentManager? = when (this) {
-        is Fragment -> this.childFragmentManager
-        is FragmentActivity -> this.supportFragmentManager
-        else -> null
-    }
-    if (fragmentManager == null) {
-        Log.e("showDialog", "----context is not type of Fragment nor FragmentActivity")
-        return
-    }
-
-    val dialog =
-        BottomSheetDialog.getInstance(dialogText, confirmBtnText, cancelBtnText, showCancelBtn)
-    dialog.confirmAction = confirmAction
-    dialog.cancelAction = cancelAction
-    dialog.isCancelable = cancelable
-    dialog.show(fragmentManager, "showDialog")
+    BottomSheetBuilder(this).setText(dialogText)
+        .setConfirmBtnText(confirmBtnText)
+        .setCancelBtnText(cancelBtnText)
+        .setShowCancelBtn(showCancelBtn)
+        .setCancelable(cancelable)
+        .setConfirmAction(confirmAction)
+        .setCancelAction(cancelAction)
+        .show()
 }
 //endregion
 
