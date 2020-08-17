@@ -3,6 +3,7 @@ package mehrpars.mobile.baseutil.common
 import mehrpars.mobile.baseutil.common.calendar.CalendarTool
 import mehrpars.mobile.baseutil.common.calendar.ShamsiCalendar
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 object DateUtils {
     private const val dateFormat = "yyyy/MM/dd HH:mm:ss"
@@ -89,9 +90,18 @@ object DateUtils {
     }
 
     fun getTimeString(millis: Int): String {
-        val second = (millis / 1000 % 60).toLong()
-        val minute = (millis / (1000 * 60) % 60).toLong()
-        val hour = (millis / (1000 * 60 * 60) % 24).toLong()
+        val second =
+            TimeUnit.MILLISECONDS.toSeconds(millis.toLong()) % TimeUnit.MINUTES.toSeconds(1)
+        val minute = TimeUnit.MILLISECONDS.toMinutes(millis.toLong()) % TimeUnit.HOURS.toMinutes(1)
+        val hour = TimeUnit.MILLISECONDS.toHours(millis.toLong())
+        return if (hour > 0) String.format("%02d:%02d:%02d", hour, minute, second)
+        else String.format("%02d:%02d", minute, second)
+    }
+
+    private fun getTimeString(millis: Long): String {
+        val second = TimeUnit.MILLISECONDS.toSeconds(millis) % TimeUnit.MINUTES.toSeconds(1)
+        val minute = TimeUnit.MILLISECONDS.toMinutes(millis) % TimeUnit.HOURS.toMinutes(1)
+        val hour = TimeUnit.MILLISECONDS.toHours(millis)
         return if (hour > 0) String.format("%02d:%02d:%02d", hour, minute, second)
         else String.format("%02d:%02d", minute, second)
     }

@@ -205,6 +205,7 @@ enum class EnumToastType(val value: Int) {
 }
 
 val EMPTY_LAMBDA_: (Dialog) -> Unit = {}
+
 @Deprecated("use showBottomSheet() function instead")
 fun Context.showDialog(
     dialogText: String,
@@ -262,12 +263,12 @@ fun Context.showBottomSheet(
 //endregion
 
 // region Json
-fun JsonObject.optString(key: String): String {
+fun JsonObject.optString(key: String, defaultValue : String = ""): String {
     val element = get(key)
     if (element != null && element !== JsonNull.INSTANCE)
         return element.asString
 
-    return ""
+    return defaultValue
 }
 
 fun JsonObject.optInt(key: String, defaultValue: Int = 0): Int {
@@ -355,14 +356,16 @@ fun showStrike(textView: TextView, show: Boolean?) {
 
 // for CustomSpinner
 @BindingAdapter(
-    value = ["entries", "selectedValue", "selectedValueAttrChanged",
-        "spinnerItemResource", "dropDownResource"], requireAll = false
+    value = ["entries", "selectedValue", "selectedValueAttrChanged", "selectedPosition",
+        "selectedPositionAttrChanged", "spinnerItemResource", "dropDownResource"], requireAll = false
 )
 fun <T : CharSequence> setEntries(
     spinner: CustomSpinner,
     entries: Array<T>?,
     selectedValue: String?,
     newTextAttrChanged: InverseBindingListener?,
+    selectedPosition: Int?,
+    newPositionAttrChanged: InverseBindingListener?,
     spinnerItemResource: Int?,
     dropDownResource: Int?
 ) {
@@ -401,8 +404,19 @@ fun <T : CharSequence> setEntries(
             }
         })
     }
+    newPositionAttrChanged?.let {
+        spinner.addOnItemSelectedListener(object : CustomSpinner.OnItemSelectListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?, view: View?, position: Int, id: Long
+                ) {
+                    newPositionAttrChanged.onChange()
+                }
+            })
+    }
 
-    if (selectedValue != null) {
+    if (selectedPosition != null) {
+        spinner.setSelection(selectedPosition, true)
+    } else if (selectedValue != null) {
         val pos = (spinner.adapter as ArrayAdapter<String>).getPosition(selectedValue)
         spinner.setSelection(pos, true)
     }
@@ -413,6 +427,11 @@ fun <T : CharSequence> setEntries(
 @InverseBindingAdapter(attribute = "selectedValue", event = "selectedValueAttrChanged")
 fun captureSelectedValue(spinner: CustomSpinner): String {
     return spinner.selectedItem as String
+}
+
+@InverseBindingAdapter(attribute = "selectedPosition", event = "selectedPositionAttrChanged")
+fun captureSelectedPosition(spinner: CustomSpinner): Int {
+    return spinner.selectedItemPosition
 }
 
 // endregion
