@@ -324,7 +324,7 @@ fun Intent.putExtra(name: String, value: Any) {
 //endregion
 
 // region Other
-fun Double.round(decimals: Int = 2): Double = "%.${decimals}f".format(Locale("en"), this).toDouble()
+fun Double.round(decimals: Int = 2): Double = "%.${decimals}f".format(Locale.US, this).toDouble()
 // endregion
 
 // region BindingAdapter

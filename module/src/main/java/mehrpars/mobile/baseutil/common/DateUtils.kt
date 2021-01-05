@@ -94,16 +94,16 @@ object DateUtils {
             TimeUnit.MILLISECONDS.toSeconds(millis.toLong()) % TimeUnit.MINUTES.toSeconds(1)
         val minute = TimeUnit.MILLISECONDS.toMinutes(millis.toLong()) % TimeUnit.HOURS.toMinutes(1)
         val hour = TimeUnit.MILLISECONDS.toHours(millis.toLong())
-        return if (hour > 0) String.format("%02d:%02d:%02d", hour, minute, second)
-        else String.format("%02d:%02d", minute, second)
+        return if (hour > 0) String.format(Locale.US, "%02d:%02d:%02d", hour, minute, second)
+        else String.format(Locale.US, "%02d:%02d", minute, second)
     }
 
     private fun getTimeString(millis: Long): String {
         val second = TimeUnit.MILLISECONDS.toSeconds(millis) % TimeUnit.MINUTES.toSeconds(1)
         val minute = TimeUnit.MILLISECONDS.toMinutes(millis) % TimeUnit.HOURS.toMinutes(1)
         val hour = TimeUnit.MILLISECONDS.toHours(millis)
-        return if (hour > 0) String.format("%02d:%02d:%02d", hour, minute, second)
-        else String.format("%02d:%02d", minute, second)
+        return if (hour > 0) String.format(Locale.US, "%02d:%02d:%02d", hour, minute, second)
+        else String.format(Locale.US, "%02d:%02d", minute, second)
     }
 
     class SimpleDate(
@@ -116,14 +116,14 @@ object DateUtils {
     ) {
         fun getStringDate(format: String = dateFormat, monthNames: List<String>? = null): String {
             val monthName = if (monthNames?.size == 12) monthNames[month - 1]
-            else "%02d".format(month)
+            else "%02d".format(Locale.US, month)
 
             return format.replace("yyyy", "$year")
                 .replace("MM", monthName)
-                .replace("dd", "%02d".format(date))
-                .replace("HH", "%02d".format(hours))
-                .replace("mm", "%02d".format(minutes))
-                .replace("ss", "%02d".format(seconds))
+                .replace("dd", "%02d".format(Locale.US, date))
+                .replace("HH", "%02d".format(Locale.US, hours))
+                .replace("mm", "%02d".format(Locale.US, minutes))
+                .replace("ss", "%02d".format(Locale.US, seconds))
         }
 
         fun getDate(): Date {

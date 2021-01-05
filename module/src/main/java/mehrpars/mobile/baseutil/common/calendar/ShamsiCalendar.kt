@@ -1,7 +1,6 @@
 package mehrpars.mobile.baseutil.common.calendar
 
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
 class ShamsiCalendar {
 
@@ -203,13 +202,12 @@ class ShamsiCalendar {
 
         val currentShamsiDate: String
             get() {
-                val loc = Locale("en_US")
                 val util = ShamsiCalendar()
                 val sc = util.SolarCalendar()
                 return sc.year.toString() + "/" + String.format(
-                    loc, "%02d",
+                    Locale.US, "%02d",
                     sc.month
-                ) + "/" + String.format(loc, "%02d", sc.date)
+                ) + "/" + String.format(Locale.US, "%02d", sc.date)
             }
     }
 }
