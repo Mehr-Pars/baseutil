@@ -30,7 +30,7 @@ open class TextViewCustom : AppCompatTextView {
 
     private fun initialize(context: Context, attrs: AttributeSet) {
         setCustomFont(context, attrs)
-        setDefaultGravity(context, attrs)
+//        setDefaultGravity(context, attrs)
         setTooltip(context, attrs)
     }
 
@@ -69,11 +69,8 @@ open class TextViewCustom : AppCompatTextView {
     ) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter)
         if (!forceGravity && lengthBefore == 0 && lengthAfter > 0) {
-            if (text.subSequence(
-                    0,
-                    1
-                ).toString().matches("[a-zA-Z]".toRegex())
-            ) { // check if text starts with english character
+            // check if text starts with english character
+            if (text.subSequence(0, 1).toString().matches("[a-zA-Z]".toRegex())) {
                 gravity = Gravity.LEFT
             } else if (defaultGravity != 0) {
                 gravity = defaultGravity

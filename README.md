@@ -2,7 +2,7 @@
 
 Add to _build.gradle_ (app):
 ```groovy
-implementation 'mehrpars.mobile.lib:baseutil:1.1.0-alpha6'
+implementation 'mehrpars.mobile.lib:baseutil:1.1.0-alpha7'
 ```
 
 Add to _build.gradle_ (Project):
