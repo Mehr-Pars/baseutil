@@ -124,7 +124,7 @@ artifactory {
 
 task generateSources {
     doFirst {
-        def script = "/home/arasteh/MyApps/android-studio/plugins/Kotlin/kotlinc/bin/vtukotlinc _generator_helper.kt -include-runtime -d _generator.jar".execute()
+        def script = "kotlinc _generator_helper.kt -include-runtime -d _generator.jar".execute()
         script.in.eachLine { line -> println line }
         script.err.eachLine { line -> println "ERROR: " + line }
         script.waitFor()
