@@ -166,7 +166,7 @@ object DateUtils {
                 }
             }
 
-            parse(date.replace(number, ""), format.replace(f.toString(), ""))
+            parse(date.replaceFirst(number, ""), format.replace(f.toString(), ""))
         }
 
         companion object {
