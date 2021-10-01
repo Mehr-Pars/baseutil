@@ -88,7 +88,7 @@ fun generateDimens(multiply: Float, filePath: String) {
 }
 // endregion
 
-fun main(args: Array<String>) {
+fun main() {
     //generate Readme
     generateReadme()
 
